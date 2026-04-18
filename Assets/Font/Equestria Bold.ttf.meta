@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: d6e5c82e664355a4eb6c0c86f947dfbf
+timeCreated: 1776519214
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  name:
+  fontSize: 50
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Equestria
+  fontNames:
+  - Equestria
+  fallbackFontReferences: []
+  customCharacters:
+  fontRenderingMode: 0
+  output:
+    hasEmptyFontData: 0
+  ascentCalculationMode: 1
+  userData:
+  assetBundleName:
+  assetBundleVariant:

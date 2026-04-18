@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - GLOBAL
+  - Danger
+  - CheckPoint
+  - Rope
+  - Deep
+  - HUD
+  - CrushWalls
+  - forDirect
+  - Zahvat
+  - aMooshroomJumper
+  - Ignore
+  - aLight
+  - MapSlot
+  - aFairyDoor
+  - ID_Door
+  - MUSIC
+  - ZoneDelete
+  - Cell
+  - BigCell
+  - SkyCell
+  - SkyTaxi
+  - aMichsRatsRun
+  - Slot
+  - Barrier
+  - Drag
+  - Tool
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - Rope
+  - Poplavok
+  - Sensor
+  - BoxETC
+  - Tools
+  - Other
+  - NoPlayer
+  - NoEnemy
+  - Enemy
+  - NPC
+  - OnlyPlayer
+  - NPCBarrier
+  - ForBarrier
+  - noCollisionHelp
+  - AllCollision
+  - RopeWall
+  - RopeTrigger
+  - platform
+  - EnemyPlatform
+  - PlayerPlatform
+  - EnemyOuch
+  - PlayerShift
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

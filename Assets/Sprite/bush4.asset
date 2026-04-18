@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!213 &21300000
+Sprite:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: bush4
+  m_Rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 396
+    height: 252
+  m_Offset: {x: -0.51850855, y: -91.77778}
+  m_Border: {x: 0, y: 0, z: 0, w: 0}
+  m_PixelsToUnits: 100
+  m_Pivot: {x: 0.49869063, y: 0.13580248}
+  m_Extrude: 1
+  m_IsPolygon: 0
+  m_AtlasName:
+  m_PackingTag:
+  m_RD:
+    texture: {fileID: 2800000, guid: 0c8c7b27810847546a9e4878e97df329, type: 3}
+    alphaTexture: {fileID: 0}
+    m_SubMeshes:
+    - serializedVersion: 2
+      firstByte: 0
+      indexCount: 57
+      topology: 0
+      firstVertex: 0
+      vertexCount: 20
+      localAABB:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+    m_IndexBuffer: 1300110012001000120011000100100011000c00100001000f000e000d000c000d000e000b000d000c0001000b000c0002000b00010008000b0002000000080002000a0008000000090008000a00050008000900060008000500070006000500040000000300010003000000020001000000
+    m_VertexData:
+      m_CurrentChannels: 9
+      m_VertexCount: 20
+      m_Channels:
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 3
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 12
+        format: 0
+        dimension: 2
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      m_DataSize: 400
+      _typelessdata: d41c3cbfa1b20340000000000000000000000000fd784bbff1acc83f000000000000000000000000455a46bff1acc83f000000000000000000000000122753bf9ff4c93f0000000000000000000000003b8362bf2eb7ff3f000000000000000000000000fc57e83fb6600b400000000000000000000000008c1afe3f0a19aabe0000000000000000000000008c1afe3f2eb79f3f000000000000000000000000ddd2bc3fc337afbe000000000000000000000000e13566beb6600b400000000000000000000000001a7782bed4e50640000000000000000000000000455a46bfc337afbe00000000000000000000000037dbcabf2eb79f3f000000000000000000000000b2eff8bf0a53173e000000000000000000000000bcc6fcbf85a9cb3e000000000000000000000000bcc6fcbf1f015f3e0000000000000000000000006a0edebf8a46a23f000000000000000000000000eff9efbf7698ba3f000000000000000000000000fad0f3bff1aca83f0000000000000000000000005660f6bf61eab23f000000000000000000000000
+    textureRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 396
+      height: 252
+    textureRectOffset: {x: 0, y: 0}
+    atlasRectOffset: {x: -1, y: -1}
+    settingsRaw: 64
+    uvTransform: {x: 100, y: 197.48149, z: 100, w: 34.22223}

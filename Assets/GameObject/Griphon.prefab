@@ -1,0 +1,795 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1709254077376921
+GameObject:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - component: {fileID: 4730242686860875}
+  - component: {fileID: 114724804207875695}
+  m_Layer: 0
+  m_Name: Griphon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4730242686860875
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1709254077376921}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114724804207875695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1709254077376921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdeae9d602cd966a5a5b6272023866be, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: GriphonFly0004
+    boundsData:
+    - {x: -0.18, y: -0.12499997, z: 0}
+    - {x: 2.3600001, y: 0.98999995, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.36, y: -0.61999995, z: 0}
+    - {x: 1, y: -0.61999995, z: 0}
+    - {x: -1.36, y: 0.37, z: 0}
+    - {x: 1, y: 0.37, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.8349619, y: 0.50000095}
+    - {x: 0.8349619, y: 0.7304678}
+    - {x: 0.9316397, y: 0.50000095}
+    - {x: 0.9316397, y: 0.7304678}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0ad0a0b94864be7469ed4b7e605ce013
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: GriphonFly0005
+    boundsData:
+    - {x: -0.22000009, y: -0.145, z: 0}
+    - {x: 2.46, y: 0.99, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.45, y: -0.64, z: 0}
+    - {x: 1.0099999, y: -0.64, z: 0}
+    - {x: -1.45, y: 0.35, z: 0}
+    - {x: 1.0099999, y: 0.35, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.73437595, y: 0.37793067}
+    - {x: 0.73437595, y: 0.6181631}
+    - {x: 0.83105373, y: 0.37793067}
+    - {x: 0.83105373, y: 0.6181631}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 28c4649d08d9ebb4598339199353fe0a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: GriphonFly0002
+    boundsData:
+    - {x: -0.25, y: 0.09000003, z: 0}
+    - {x: 2.54, y: 1.26, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.52, y: -0.53999996, z: 0}
+    - {x: 1.02, y: -0.53999996, z: 0}
+    - {x: -1.52, y: 0.72, z: 0}
+    - {x: 1.02, y: 0.72, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.85644627, y: 0.24804786}
+    - {x: 0.85644627, y: 0.49609277}
+    - {x: 0.97949123, y: 0.24804786}
+    - {x: 0.97949123, y: 0.49609277}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 43310e362f551fd4da05cbcb5240ace9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: GriphonFly0006
+    boundsData:
+    - {x: -0.22000003, y: 0.13500002, z: 0}
+    - {x: 2.48, y: 1.3899999, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.46, y: -0.55999994, z: 0}
+    - {x: 1.02, y: -0.55999994, z: 0}
+    - {x: -1.46, y: 0.83, z: 0}
+    - {x: 1.02, y: 0.83, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -0.99999994}
+    - {x: 0, y: 0, z: -0.99999994}
+    - {x: 0, y: 0, z: -0.99999994}
+    - {x: 0, y: 0, z: -0.99999994}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.85937595, y: 0.0019541015}
+    - {x: 0.85937595, y: 0.24413964}
+    - {x: 0.99511623, y: 0.0019541015}
+    - {x: 0.99511623, y: 0.24413964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 97d84068003320c43beab2cf5d3c4155
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: GriphonFly0003
+    boundsData:
+    - {x: -0.2150001, y: -0.16999997, z: 0}
+    - {x: 2.4499998, y: 0.9, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.44, y: -0.61999995, z: 0}
+    - {x: 1.0099999, y: -0.61999995, z: 0}
+    - {x: -1.44, y: 0.28, z: 0}
+    - {x: 1.0099999, y: 0.28, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.73437595, y: 0.62207127}
+    - {x: 0.73437595, y: 0.8613272}
+    - {x: 0.8222647, y: 0.62207127}
+    - {x: 0.8222647, y: 0.8613272}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: e5090b495f6d078409c6f46aa3905bc9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: GriphonFly0001
+    boundsData:
+    - {x: -0.27500004, y: 0.435, z: 0}
+    - {x: 2.6100001, y: 1.93, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.58, y: -0.53, z: 0}
+    - {x: 1.03, y: -0.53, z: 0}
+    - {x: -1.58, y: 1.4, z: 0}
+    - {x: 1.03, y: 1.4, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -0.99999994}
+    - {x: 0, y: 0, z: -0.99999994}
+    - {x: 0, y: 0, z: -0.99999994}
+    - {x: 0, y: 0, z: -0.99999994}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.6005869, y: 0.0019541015}
+    - {x: 0.8554678, y: 0.0019541015}
+    - {x: 0.6005869, y: 0.1904287}
+    - {x: 0.8554678, y: 0.1904287}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: e57b38c60b5f45e498117e042d42c486
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: GriphonFly0007
+    boundsData:
+    - {x: -0.26000005, y: 0.36, z: 0}
+    - {x: 2.6, y: 1.8399999, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.22500002, y: 0.38, z: 0}
+    - {x: 2.77, y: 2.08, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.5600001, y: -0.55999994, z: 0}
+    - {x: 1.04, y: -0.55999994, z: 0}
+    - {x: -1.5600001, y: 1.28, z: 0}
+    - {x: 1.04, y: 1.28, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.59863377, y: 0.19433692}
+    - {x: 0.8525381, y: 0.19433692}
+    - {x: 0.59863377, y: 0.37402245}
+    - {x: 0.8525381, y: 0.37402245}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: fe784161500f05f4284f7549e999556c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: griph_wait0002
+    boundsData:
+    - {x: -0.49499997, y: -0.03999996, z: 0}
+    - {x: 2.9499998, y: 1.6600001, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.44499993, y: 0.01999998, z: 0}
+    - {x: 3.33, y: 2.5, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.9699999, y: -0.87, z: 0}
+    - {x: 0.97999996, y: -0.87, z: 0}
+    - {x: -1.9699999, y: 0.7900001, z: 0}
+    - {x: 0.97999996, y: 0.7900001, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.3066416, y: 0.17285255}
+    - {x: 0.5947256, y: 0.17285255}
+    - {x: 0.3066416, y: 0.33495995}
+    - {x: 0.5947256, y: 0.33495995}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 52bb69562a240a94c9ef8790c1517647
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: griph_wait0001
+    boundsData:
+    - {x: -0.54499996, y: -0.014999986, z: 0}
+    - {x: 2.97, y: 1.71, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.44499993, y: 0.01999998, z: 0}
+    - {x: 3.33, y: 2.5, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -2.03, y: -0.87, z: 0}
+    - {x: 0.94, y: -0.87, z: 0}
+    - {x: -2.03, y: 0.84000003, z: 0}
+    - {x: 0.94, y: 0.84000003, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.3066416, y: 0.0019541015}
+    - {x: 0.59667873, y: 0.0019541015}
+    - {x: 0.3066416, y: 0.16894433}
+    - {x: 0.59667873, y: 0.16894433}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 698d21343f9ba884fa9a1c716e442e77
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: griph_wait0005
+    boundsData:
+    - {x: -0.37999988, y: -0.100000024, z: 0}
+    - {x: 2.88, y: 1.54, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.44499993, y: 0.01999998, z: 0}
+    - {x: 3.33, y: 2.5, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.8199999, y: -0.87, z: 0}
+    - {x: 1.0600002, y: -0.87, z: 0}
+    - {x: -1.8199999, y: 0.66999996, z: 0}
+    - {x: 1.0600002, y: 0.66999996, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.5800791, y: 0.37793067}
+    - {x: 0.5800791, y: 0.65917873}
+    - {x: 0.7304678, y: 0.37793067}
+    - {x: 0.7304678, y: 0.65917873}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: b226b4fd314d07845bd68d540b12f936
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: griph_wait0003
+    boundsData:
+    - {x: -0.45499998, y: -0.060000002, z: 0}
+    - {x: 2.9299998, y: 1.62, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.44499993, y: 0.01999998, z: 0}
+    - {x: 3.33, y: 2.5, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.92, y: -0.87, z: 0}
+    - {x: 1.01, y: -0.87, z: 0}
+    - {x: -1.92, y: 0.75, z: 0}
+    - {x: 1.01, y: 0.75, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.0019541015, y: 0.20703223}
+    - {x: 0.28808495, y: 0.20703223}
+    - {x: 0.0019541015, y: 0.3652334}
+    - {x: 0.28808495, y: 0.3652334}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: c1eb495c14555a04eb8620b048d23c02
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: griph_wait0004
+    boundsData:
+    - {x: -0.41499996, y: -0.07999998, z: 0}
+    - {x: 2.9099998, y: 1.58, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.44499993, y: 0.01999998, z: 0}
+    - {x: 3.33, y: 2.5, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -1.8699999, y: -0.87, z: 0}
+    - {x: 1.04, y: -0.87, z: 0}
+    - {x: -1.8699999, y: 0.71000004, z: 0}
+    - {x: 1.04, y: 0.71000004, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.29199317, y: 0.33886817}
+    - {x: 0.5761709, y: 0.33886817}
+    - {x: 0.29199317, y: 0.49316308}
+    - {x: 0.5761709, y: 0.49316308}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: e01260d8b9d06114c9c04d987c69c81f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: griph_shocked
+    boundsData:
+    - {x: -0.5799999, y: 0.16, z: 0}
+    - {x: 3.08, y: 2.06, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.4949999, y: -0.029999971, z: 0}
+    - {x: 3.33, y: 2.5, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -2.12, y: -0.86999995, z: 0}
+    - {x: 0.96, y: -0.86999995, z: 0}
+    - {x: -2.12, y: 1.1899999, z: 0}
+    - {x: 0.96, y: 1.1899999, z: 0}
+    normals:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    tangents:
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    - {x: 1, y: 0, z: 0, w: 1}
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.3027334, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.20312402}
+    - {x: 0.3027334, y: 0.20312402}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 872b0be0cda1d2542b3c9e2a1773f6ff
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 6d1ef3c2607e4a1428dd293e5546092f, type: 2}
+  textures:
+  - {fileID: 2800000, guid: e5d35550b0c3795488e90444e7cc74d1, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 1
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 1169b82fc7314ca47ae642a445ad7065
+  spriteCollectionName: Griphon
+  assetName:
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 50
+  buildKey: 156891195
+  dataGuid: e9a6f2223ef6ced428e84e0287fc8a65
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1709254077376921}
+  m_IsPrefabParent: 1

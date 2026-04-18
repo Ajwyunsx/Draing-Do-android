@@ -1,0 +1,250 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_Scenes:
+  - enabled: 1
+    path: Assets/a MY LEVELS/a first level/logo.unity
+    guid: e18fdb1baab82654da996d0147c5f0fc
+  - enabled: 1
+    path: Assets/a MY LEVELS/a first level/main menu.unity
+    guid: 8c758256157e50140bec6d2467f1febf
+  - enabled: 1
+    path: Assets/a MY LEVELS/a first level/options.unity
+    guid: c8e5e0c73da8e714ca16396449d96312
+  - enabled: 1
+    path: Assets/a MY LEVELS/a first level/players.unity
+    guid: af43454e14722e64c9d6a8b18da41af3
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Minigame Cutscene/gala.unity
+    guid: 465068e6b8526dc459e632a2154819cc
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Minigame Cutscene/fly.unity
+    guid: 5d843bbd59f30094b820f9bdda98e831
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/camp.unity
+    guid: 8eef4c81d2e9d2e41928555bda7389b0
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Minigame Cutscene/falling.unity
+    guid: 1aca6d835997ee04888a46f40bfe4406
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/boss 2.unity
+    guid: 74da328edddb9614591cb47298633232
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/boss.unity
+    guid: 877f1b43c2d88a74fbeaf86d19e08dd9
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/dark swamp.unity
+    guid: 0fee191662bb6064d8c6d22af1815f85
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/dark.unity
+    guid: dd3c25df6cbfebc48a59002a7af0f613
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/deep 2.unity
+    guid: 8ac3d7c553dfc164a9e45ea38857004a
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/deep.unity
+    guid: e9489a851d132064dbba6f70577edaa5
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/doc.unity
+    guid: bc90a06872d29cd44bde3f7400f417d7
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/dungeon.unity
+    guid: 483911aa75cc8d74493ab80554c53812
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/hardcore/green 2.unity
+    guid: 36ff01f706d7d9147af32704ab0f63fd
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/hardcore/green boss.unity
+    guid: f0efbc7374c1a624f85f0e5b1507b945
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/hardcore/green water.unity
+    guid: 47811ce3c2f5dab489f5bcf5c1bb256b
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/hardcore/green.unity
+    guid: db96a404b25c87940a714f6e463cf63b
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/gryphon boss.unity
+    guid: 9f02f416aab10d94d83a4442c5c6dbaf
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/hills 2.unity
+    guid: 98cdd1fbd7d75284d83f2e7518be68c7
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/hills.unity
+    guid: 5ad420d0c752aad46bf09d52e5d58539
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/jungle 2.unity
+    guid: 9edf8f5f01391b948b757abe74eb8d1a
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/jungle.unity
+    guid: c4af1d4a88648d74a942fe010cc59896
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/key boss.unity
+    guid: 99c26dbcb29e5184da41d71c496ab238
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/temple/monkey boss.unity
+    guid: 115cd2acfb9279b43bcb8141169c599f
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/nest 2.unity
+    guid: be67aa13cc646824b91060b1816f5579
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/nest.unity
+    guid: cc00241acc9440c41b95fc75922b1a9a
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/river 2.unity
+    guid: ee2952fd0cfb2164bbe30580329165d6
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/river 3.unity
+    guid: a181e8318bde0b645a21da6fc852d84a
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/river 4.unity
+    guid: 5864ac74718bf7b4f970417c2623d039
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/river.unity
+    guid: dbc4dffec98770c4fa0a465ac8327cf0
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/swamp 2.unity
+    guid: 5b73dc8aac205a84c8d5c5183f914244
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/swamp boss.unity
+    guid: 77260f13898b7594eb01cba940829373
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/swamp.unity
+    guid: 2147503fdd94b8645a92bb486c5b0d56
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/swampfall.unity
+    guid: 30fe71ef5b6f997419ba5b4c9e26f3ab
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/temple/temple 2.unity
+    guid: adfe7a7a92d28c4439b28ed805afc6d7
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/temple/temple 3.unity
+    guid: 91d57c1b2d3c06040ba2a7db0837bdac
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/temple/temple gate.unity
+    guid: a0a8e972fb9dbdd44971fb4c20043dec
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/temple/temple.unity
+    guid: b294d6b3b52a6ec49930aaa8b3af440e
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/test.unity
+    guid: 14004a86ade95e643a6212266a91e91f
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/waterfall 2.unity
+    guid: c9fd96335c5c6f94ea8e1025e579a7ff
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/waterfall high.unity
+    guid: 275940b143755614daf8010704a2823d
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/jungle/waterfall.unity
+    guid: 98bc4329c3ae3aa48afa04342093d48b
+  - enabled: 1
+    path: Assets/a MY LEVELS/end/end A1.unity
+    guid: 35f17ab11cb9221499dac97cb267c2dc
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 1.unity
+    guid: 05c64f78c74517b458ea98a4ba2eb701
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 2.unity
+    guid: 8fb22974b5f506e4896f058acb1da738
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 3.unity
+    guid: d8c69de51958b9547b4d1b51367e3ff4
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 4.unity
+    guid: 5a0fd7066437edb439f56d86f89441e6
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 5.unity
+    guid: d955ca90ccb025f40bcda663b602bdf8
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 6.unity
+    guid: 4ba81f0bb88dc794bbddc7c7aa820630
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 7.unity
+    guid: f1562e8562f4ba2478313411180d21d2
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/hunt 8.unity
+    guid: c45930236db3777459d0322114cd5d66
+  - enabled: 1
+    path: Assets/a MY LEVELS/random/gen0.unity
+    guid: b3ccb372149e9224ca21458a89f899d7
+  - enabled: 1
+    path: Assets/a MY LEVELS/random/gen1.unity
+    guid: 32ff37e07877e4e4eb243e668074b005
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 1.unity
+    guid: 92e3129a2e7da104aa01a9bf14a77c34
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 2.unity
+    guid: 4eb3aef20a161c24a922aaa2d9a5df66
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 3.unity
+    guid: 1c95c212cdce0e1429d8e1bcd0880c57
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 4.unity
+    guid: 1415c62b523f60045961dd90a294b649
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 5.unity
+    guid: 573509b05e838f94b96d2410cc4c24a1
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 6.unity
+    guid: d185d89e2e026ce4ca16813a6edb9f76
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 7.unity
+    guid: 9affd5fefc63a1645a7061221c686e6c
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung 8.unity
+    guid: 2103b9db4f56ded4090ffffbd915a754
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung boss.unity
+    guid: a0db5d6b82fb05e4ba968c52d19c2653
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/dung exit.unity
+    guid: 6e266ae11ce4eef46bc00b25bbffc896
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/statue.unity
+    guid: a3d5568a746c3b64fa7542c93ec483ec
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/wind.unity
+    guid: 2a5cf1bd4dd4a054da915237a7acd2c8
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/Dung Locations/wind2.unity
+    guid: 830cc882e17c63d40b22acf6ac56e25e
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/trapRoom.unity
+    guid: 4ee978631b7f4544c83dad825daba16a
+  - enabled: 1
+    path: Assets/a MY LEVELS/empty.unity
+    guid: 70c671c31e9879d45966215dc31016c0
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/final/final1.unity
+    guid: 2d404fcb9bbf05041ad4bd48432834fb
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/final/final2.unity
+    guid: 8a4aa73eb5ba4c04390602f9cedfd35d
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/final/final3.unity
+    guid: 14433440e710a714890b7792ea56e645
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/final/final4.unity
+    guid: b63f3ff0f47c0a14a8208644ae6a1448
+  - enabled: 1
+    path: Assets/a MY LEVELS/world/final/finalBoss.unity
+    guid: e6e33a904eb35894d9cbcc2141131d3e
+  - enabled: 1
+    path: Assets/a MY LEVELS/end/endA2.unity
+    guid: affbacacc11da494b8a86cf4e9a2e60b
+  - enabled: 1
+    path: Assets/a MY LEVELS/end/endA3.unity
+    guid: 6546f193c782074468b2d6280e6286c7
+  - enabled: 1
+    path: Assets/a MY LEVELS/world.unity
+    guid: b3e3a67d27e71de48bb2328042bacd13
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/ponyville.unity
+    guid: 575a69fea39ed674f922c815933349f1
+  - enabled: 1
+    path: Assets/a MY LEVELS/secrets/raritys.unity
+    guid: e89cd70845476ab4b9bc9dbfbf906b72

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: d71efdbc84b31a04e86734c2087d5d27
+timeCreated: 1776519214
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  name:
+  fontSize: 50
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aura Dream
+  fontNames:
+  - Aura Dream
+  fallbackFontReferences: []
+  customCharacters:
+  fontRenderingMode: 0
+  output:
+    hasEmptyFontData: 0
+  ascentCalculationMode: 1
+  userData:
+  assetBundleName:
+  assetBundleVariant:
