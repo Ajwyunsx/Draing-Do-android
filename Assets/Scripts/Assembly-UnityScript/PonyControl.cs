@@ -1,6 +1,7 @@
 using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
+using GUITexture = LegacyCompat.GUITexture;
 
 [Serializable]
 public class PonyControl : MonoBehaviour
@@ -88,6 +89,14 @@ public class PonyControl : MonoBehaviour
 	public Joystick jumpTouchPad;
 
 	public Joystick actionTouchPad;
+
+	public Joystick rollTouchPad;
+
+	private bool oldRollTouchState;
+
+	private bool oldActionTouchState;
+
+	private bool oldMoveDownTouchState;
 
 	[HideInInspector]
 	public float restmove_x;
@@ -322,9 +331,14 @@ public class PonyControl : MonoBehaviour
 
 	public virtual void Start()
 	{
-		moveTouchPad = (Joystick)GameObject.Find("MoveJoystick").GetComponent(typeof(Joystick));
-		jumpTouchPad = (Joystick)GameObject.Find("JumpJoystick").GetComponent(typeof(Joystick));
-		actionTouchPad = (Joystick)GameObject.Find("ActionJoystick").GetComponent(typeof(Joystick));
+		MobileInputBridge.EnsureDefaultControls();
+		moveTouchPad = MobileInputBridge.FindJoystick("MoveJoystick");
+		jumpTouchPad = MobileInputBridge.FindJoystick("JumpJoystick");
+		actionTouchPad = MobileInputBridge.FindJoystick("ActionJoystick");
+		CheckRollTouchPad();
+		oldRollTouchState = false;
+		oldActionTouchState = false;
+		oldMoveDownTouchState = false;
 		local_scale = transform.localScale.x;
 		ChangeCloths(Global.InTheCloth);
 		ToCP = true;
@@ -348,6 +362,65 @@ public class PonyControl : MonoBehaviour
 			ToCP = false;
 			ReturnToCheckPoint();
 		}
+	}
+
+	public virtual void CheckRollTouchPad()
+	{
+		GameObject gameObject = GameObject.Find("RollJoystick");
+		if ((bool)gameObject)
+		{
+			rollTouchPad = (Joystick)gameObject.GetComponent(typeof(Joystick));
+			return;
+		}
+		if (!Global.MobilePlatform || !(bool)actionTouchPad)
+		{
+			return;
+		}
+		GUITexture gUITexture = (GUITexture)actionTouchPad.GetComponent(typeof(GUITexture));
+		GameObject gameObject2 = (GameObject)UnityEngine.Object.Instantiate(actionTouchPad.gameObject);
+		gameObject2.name = "RollJoystick";
+		gameObject2.transform.parent = actionTouchPad.transform.parent;
+		gameObject2.transform.localRotation = actionTouchPad.transform.localRotation;
+		gameObject2.transform.localScale = actionTouchPad.transform.localScale;
+		gameObject2.transform.localPosition = actionTouchPad.transform.localPosition;
+		rollTouchPad = (Joystick)gameObject2.GetComponent(typeof(Joystick));
+		GUITexture gUITexture2 = (GUITexture)gameObject2.GetComponent(typeof(GUITexture));
+		if ((bool)gUITexture && (bool)gUITexture2)
+		{
+			Rect pixelInset = gUITexture.pixelInset;
+			pixelInset.x -= pixelInset.width + Mathf.Max(12f, pixelInset.width * 0.18f);
+			pixelInset.y += pixelInset.height + Mathf.Max(12f, pixelInset.height * 0.18f);
+			gUITexture2.pixelInset = pixelInset;
+			Color color = gUITexture.color;
+			color.r = Mathf.Min(1f, color.r * 1.1f);
+			color.g = Mathf.Min(1f, color.g * 1.05f);
+			gUITexture2.color = color;
+		}
+		if ((bool)rollTouchPad)
+		{
+			rollTouchPad.ResetJoystick();
+		}
+	}
+
+	public virtual bool RollTouchDown()
+	{
+		return MobileInputBridge.IsTouchDown(rollTouchPad, ref oldRollTouchState);
+	}
+
+	public virtual bool ActionTouchDown()
+	{
+		return MobileInputBridge.IsTouchDown(actionTouchPad, ref oldActionTouchState);
+	}
+
+	public virtual bool MoveDownTouchDown()
+	{
+		bool currentState = MobileInputBridge.IsMoveDownHeld(moveTouchPad, 0.55f, 0.85f);
+		return MobileInputBridge.GetEdge(currentState, ref oldMoveDownTouchState);
+	}
+
+	public virtual float GetMoveTouchHorizontal()
+	{
+		return MobileInputBridge.GetAxis(moveTouchPad, horizontal: true, 0.18f);
 	}
 
 	public virtual void FixedUpdate()
@@ -547,18 +620,19 @@ public class PonyControl : MonoBehaviour
 			}
 			Vector3 zero = Vector3.zero;
 			Vector3 zero2 = Vector3.zero;
-			if (ShiftTime <= 0 && StrikeTime > 0)
+			float horizontalMove = Input.GetAxis("Horizontal") + GetMoveTouchHorizontal() + SetHorizontal;
+			if (ShiftTime <= 0 && StrikeTime > 0 && Mathf.Abs(horizontalMove) < 0.05f)
 			{
 				if (!grounded)
 				{
-					float x = rigid.velocity.x * 0.975f;
+					float x = rigid.velocity.x * 0.985f;
 					Vector3 velocity6 = rigid.velocity;
 					float num11 = (velocity6.x = x);
 					Vector3 vector11 = (rigid.velocity = velocity6);
 				}
 				else
 				{
-					int num12 = 0;
+					float num12 = rigid.velocity.x * 0.7f;
 					Vector3 velocity7 = rigid.velocity;
 					float num13 = (velocity7.x = num12);
 					Vector3 vector13 = (rigid.velocity = velocity7);
@@ -566,23 +640,20 @@ public class PonyControl : MonoBehaviour
 			}
 			if (Global.BlockControl <= 0 && !NOWALK && Global.DemoMove == 0)
 			{
-				num5 = ((Mathf.Abs(moveTouchPad.position.x) >= 0.4f) ? Mathf.Sign(moveTouchPad.position.x) : 0f);
-				if (StrikeTime <= 0)
+				float moveScale = ((StrikeTime > 0 && grounded) ? 0.85f : 1f);
+				if (PushTimer == 0)
 				{
-					if (PushTimer == 0)
-					{
-						float x2 = (Input.GetAxis("Horizontal") + num5 + SetHorizontal) * speed * SandSpeedFactor + NeedSpeed.x;
-						Vector3 velocity8 = rigid.velocity;
-						float num14 = (velocity8.x = x2);
-						Vector3 vector15 = (rigid.velocity = velocity8);
-					}
-					else
-					{
-						float x3 = (Input.GetAxis("Horizontal") + num5 + SetHorizontal) * speed * 0.5f * SandSpeedFactor + NeedSpeed.x;
-						Vector3 velocity9 = rigid.velocity;
-						float num15 = (velocity9.x = x3);
-						Vector3 vector17 = (rigid.velocity = velocity9);
-					}
+					float x2 = horizontalMove * speed * moveScale * SandSpeedFactor + NeedSpeed.x;
+					Vector3 velocity8 = rigid.velocity;
+					float num14 = (velocity8.x = x2);
+					Vector3 vector15 = (rigid.velocity = velocity8);
+				}
+				else
+				{
+					float x3 = horizontalMove * speed * 0.5f * moveScale * SandSpeedFactor + NeedSpeed.x;
+					Vector3 velocity9 = rigid.velocity;
+					float num15 = (velocity9.x = x3);
+					Vector3 vector17 = (rigid.velocity = velocity9);
 				}
 			}
 			if (Global.DemoMove != 0)
@@ -870,7 +941,7 @@ public class PonyControl : MonoBehaviour
 					RopeObject = null;
 				}
 			}
-			if (StrikeTime <= 0 && action != "land" && StrikeTime <= 0)
+			if (action != "land")
 			{
 				if (Input.GetAxis("Horizontal") > 0f || moveTouchPad.position.x > 0.4f || !(SetHorizontal <= 0f))
 				{
@@ -1128,6 +1199,13 @@ public class PonyControl : MonoBehaviour
 
 	public virtual void Update()
 	{
+		if (rollTouchPad == null && Global.MobilePlatform)
+		{
+			CheckRollTouchPad();
+		}
+		bool rollTouchPressed = RollTouchDown();
+		bool actionTouchPressed = ActionTouchDown();
+		bool downTouchPressed = MoveDownTouchDown();
 		if (Global.Pause || TalkPause.IsGameplayBlocked() || Global.FadeMode == 1)
 		{
 			return;
@@ -1147,7 +1225,7 @@ public class PonyControl : MonoBehaviour
 			Global.PlatformDown = 2;
 			CheckPlatform();
 		}
-		if (Global.OnPlatformDown > 0 && Input.GetButtonDown("Down"))
+		if (Global.OnPlatformDown > 0 && (Input.GetButtonDown("Down") || downTouchPressed))
 		{
 			Global.PlatformDown = 16;
 			grounded = false;
@@ -1162,7 +1240,7 @@ public class PonyControl : MonoBehaviour
 		{
 			ForcePlayJump = true;
 		}
-		if (Global.CatchTimer <= 0 && Input.GetButtonDown("Down") && ZahvatDelay <= 0 && RopeDelay <= 0 && Global.OnPlatformDown <= 0 && !Dash && Convert.ToInt32(Global.Var["dash"]) == 1 && !IsNoFalling && !grounded && !Zahvat && !InTheWater && !RopeObject)
+		if (Global.CatchTimer <= 0 && (Input.GetButtonDown("Down") || downTouchPressed) && ZahvatDelay <= 0 && RopeDelay <= 0 && Global.OnPlatformDown <= 0 && !Dash && Convert.ToInt32(Global.Var["dash"]) == 1 && !IsNoFalling && !grounded && !Zahvat && !InTheWater && !RopeObject)
 		{
 			Dash = true;
 			Global.MP -= 10f;
@@ -1170,7 +1248,7 @@ public class PonyControl : MonoBehaviour
 			rigid.velocity *= 0.2f;
 			Global.CreateSFX(SFXStrike, transform.position, 1f, 1f);
 		}
-		if (Input.GetButtonDown("Shift") && StrikeTime <= 0 && !(Global.HP <= 0f) && Global.FadeMode != 1 && AfterStrikeTime <= 0)
+		if ((Input.GetButtonDown("Shift") || rollTouchPressed) && StrikeTime <= 0 && !(Global.HP <= 0f) && Global.FadeMode != 1 && AfterStrikeTime <= 0)
 		{
 			if (!(Global.MP <= 0f))
 			{
@@ -1215,11 +1293,12 @@ public class PonyControl : MonoBehaviour
 		if (!Global.Boomerang && !Zahvat && AfterStrikeTime <= 0)
 		{
 			bool flag2 = false;
-			if (Input.GetButtonDown("Strike") && Global.CatchTimer < 98 && Global.offBlockTimer <= 0)
+			bool flag3 = Input.GetButtonDown("Strike") || actionTouchPressed;
+			if (flag3 && Global.CatchTimer < 98 && Global.offBlockTimer <= 0)
 			{
 				flag2 = true;
 			}
-			else if (Input.GetButtonDown("Strike") && !Input.GetMouseButton(0))
+			else if (flag3 && !Input.GetMouseButton(0))
 			{
 				flag2 = true;
 			}

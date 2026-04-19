@@ -24,6 +24,48 @@ public class PlayVideo : MonoBehaviour
 
 	private string videoName = "Daring Do Animation Test 1";
 
+	private Joystick jumpTouchPad;
+
+	private Joystick actionTouchPad;
+
+	private Joystick rollTouchPad;
+
+	private bool oldJumpTouchState;
+
+	private bool oldActionTouchState;
+
+	private bool oldRollTouchState;
+
+	private void CheckTouchPads()
+	{
+		if (!Global.MobilePlatform)
+		{
+			return;
+		}
+		MobileInputBridge.EnsureDefaultControls();
+		if (!(bool)jumpTouchPad)
+		{
+			jumpTouchPad = MobileInputBridge.FindJoystick("JumpJoystick");
+		}
+		if (!(bool)actionTouchPad)
+		{
+			actionTouchPad = MobileInputBridge.FindJoystick("ActionJoystick");
+		}
+		if (!(bool)rollTouchPad)
+		{
+			rollTouchPad = MobileInputBridge.FindJoystick("RollJoystick");
+		}
+	}
+
+	private bool TouchAdvanceDown()
+	{
+		CheckTouchPads();
+		bool flag = MobileInputBridge.IsTouchDown(actionTouchPad, ref oldActionTouchState);
+		bool flag2 = MobileInputBridge.IsTouchDown(jumpTouchPad, ref oldJumpTouchState);
+		bool flag3 = MobileInputBridge.IsTouchDown(rollTouchPad, ref oldRollTouchState);
+		return flag || flag2 || flag3;
+	}
+
 	public virtual void Awake()
 	{
 		cachedRenderer = GetComponent<Renderer>();
@@ -36,17 +78,19 @@ public class PlayVideo : MonoBehaviour
 		{
 			runtimeMaterial.mainTexture = fallbackTexture;
 		}
+		CheckTouchPads();
 		CreateBackdrop();
 		StartVideoPlayback();
 	}
 
 	public virtual void Update()
 	{
+		bool flag = TouchAdvanceDown();
 		if (!closeRequested && prepared && playbackStarted && !(videoPlayer == null) && !videoPlayer.isPlaying)
 		{
 			closeRequested = true;
 		}
-		if (Input.GetButtonDown("Escape") || Input.GetMouseButtonDown(1))
+		if (Input.GetButtonDown("Escape") || Input.GetMouseButtonDown(1) || flag)
 		{
 			closeRequested = true;
 		}

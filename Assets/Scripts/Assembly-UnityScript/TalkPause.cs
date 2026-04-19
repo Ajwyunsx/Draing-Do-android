@@ -11,6 +11,48 @@ public class TalkPause : MonoBehaviour
 	[NonSerialized]
 	public static int menu;
 
+	private Joystick jumpTouchPad;
+
+	private Joystick actionTouchPad;
+
+	private Joystick rollTouchPad;
+
+	private bool oldJumpTouchState;
+
+	private bool oldActionTouchState;
+
+	private bool oldRollTouchState;
+
+	private void CheckTouchPads()
+	{
+		if (!Global.MobilePlatform)
+		{
+			return;
+		}
+		MobileInputBridge.EnsureDefaultControls();
+		if (!(bool)jumpTouchPad)
+		{
+			jumpTouchPad = MobileInputBridge.FindJoystick("JumpJoystick");
+		}
+		if (!(bool)actionTouchPad)
+		{
+			actionTouchPad = MobileInputBridge.FindJoystick("ActionJoystick");
+		}
+		if (!(bool)rollTouchPad)
+		{
+			rollTouchPad = MobileInputBridge.FindJoystick("RollJoystick");
+		}
+	}
+
+	private bool TouchAdvanceDown()
+	{
+		CheckTouchPads();
+		bool flag = MobileInputBridge.IsTouchDown(actionTouchPad, ref oldActionTouchState);
+		bool flag2 = MobileInputBridge.IsTouchDown(jumpTouchPad, ref oldJumpTouchState);
+		bool flag3 = MobileInputBridge.IsTouchDown(rollTouchPad, ref oldRollTouchState);
+		return flag || flag2 || flag3;
+	}
+
 	public virtual void OnEnable()
 	{
 		menu = Mathf.Max(0, menu) + 1;
@@ -33,7 +75,8 @@ public class TalkPause : MonoBehaviour
 
 	public virtual void Update()
 	{
-		if (Global.ASKS == null && (Input.GetButtonDown("Strike") || Input.GetButtonDown("Use") || Input.GetButtonDown("Shift") || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && Global.StopTalkText && !Global.Pause && (bool)Global.TalkWindow)
+		bool flag = TouchAdvanceDown();
+		if (Global.ASKS == null && (Input.GetButtonDown("Strike") || Input.GetButtonDown("Use") || Input.GetButtonDown("Shift") || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || flag) && Global.StopTalkText && !Global.Pause && (bool)Global.TalkWindow)
 		{
 			UnityEngine.Object.Destroy(Global.TalkWindow);
 		}

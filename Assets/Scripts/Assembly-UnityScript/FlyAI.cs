@@ -114,13 +114,19 @@ public class FlyAI : MonoBehaviour
 			}
 			break;
 		case "dead":
+			core.Move(0f, -1f);
+			if (core.timer <= 0)
+			{
+				gameObject.SendMessage("MakeFX", null, SendMessageOptions.DontRequireReceiver);
+				UnityEngine.Object.Destroy(gameObject);
+			}
 			break;
 		}
 	}
 
 	public virtual void DISAPPEAR()
 	{
-		core.StartDeathSequence(100);
+		core.NewAI("dead", string.Empty, 100, 100);
 	}
 
 	public virtual void Idle()

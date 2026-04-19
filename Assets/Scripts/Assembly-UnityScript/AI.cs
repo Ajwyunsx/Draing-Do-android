@@ -187,9 +187,7 @@ public class AI : MonoBehaviour
 
     public string EnemyName;
 
-    // ===== ÐÞ¸´ÒÆ¶¯¿¨×¡ÐÂÔö =====
-    private Vector3 lastPos;
-    private int stuckTimer;
+    // ===== ï¿½Þ¸ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ =====
     // ==========================
 
     public AI()
@@ -249,9 +247,7 @@ public class AI : MonoBehaviour
             target = Global.CurrentPlayerObject;
         }
 
-        // ÐÞ¸´ÒÆ¶¯¿¨×¡³õÊ¼»¯
-        lastPos = trans.position;
-        stuckTimer = 0;
+        // ï¿½Þ¸ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½×¡ï¿½ï¿½Ê¼ï¿½ï¿½
     }
 
     public virtual void Start()
@@ -335,43 +331,14 @@ public class AI : MonoBehaviour
             }
         }
 
-        // ===== ÐÞ¸´ÒÆ¶¯¿¨×¡Âß¼­ =====
-        Vector3 currentPos = trans.position;
-        bool tryingMoveX = Mathf.Abs(Speed.x + NeedSpeed.x) > 0.1f;
-        bool barelyMovedX = Mathf.Abs(currentPos.x - lastPos.x) < 0.005f;
+        // ===== ï¿½Þ¸ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½×¡ï¿½ß¼ï¿½ =====
 
-        // Ö»ÔÚÂäµØ×´Ì¬¼ì²âË®Æ½¿¨×¡£¬±ÜÃâÌøÔ¾/»÷ÍËÊ±ÎóÅÐ
-        if (tryingMoveX && barelyMovedX && land && DontMoveTimer <= 0)
-        {
-            stuckTimer++;
-        }
-        else
-        {
-            stuckTimer = 0;
-        }
+        // Ö»ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾/ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 
-        // Á¬Ðø¼¸Ö¡Ã»¶¯£¬ÅÐ¶¨Îª¿¨×¡£¬×Ô¶¯·´ÏòÍÑÀ§
-        if (stuckTimer >= 8)
-        {
-            stuckTimer = 0;
-
-            Direction = -Direction;
-            if (Direction == 0)
-            {
-                Direction = 1;
-            }
-            Look(Direction);
-
-            Speed.x = Direction * MaxSpeed;
-            NeedSpeed.x = Direction * 0.5f;
-
-            ThereIsWall = 0;
-            DontMoveTimer = 0;
-        }
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Îªï¿½ï¿½×¡ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         // ==========================
 
         rigid.velocity = Speed + NeedSpeed;
-        lastPos = currentPos;
 
         Speed *= 0.9f;
         NeedSpeed *= FactorStop;
@@ -522,31 +489,6 @@ public class AI : MonoBehaviour
         }
     }
 
-    public virtual void MoveToX(float targ, float dist)
-    {
-        float num = Distance2D(trans.position.x, targ);
-        int num2 = (int)Mathf.Sign(targ - trans.position.x);
-
-        if (num2 == 0)
-        {
-            num2 = (Direction != 0) ? Direction : 1;
-        }
-
-        if (num > dist)
-        {
-            Speed.x = (float)num2 * MaxSpeed;
-        }
-        else if (NearEvader && num < dist * FactorNear)
-        {
-            Speed.x = (float)(-num2) * MaxSpeed;
-        }
-        else
-        {
-            // µ½´ï·¶Î§ºóÖ±½ÓÍ£ÏÂ£¬±ÜÃâÌùÇ½¶¶¶¯/À´»Ø³é´¤
-            Speed.x = 0f;
-        }
-    }
-
     public virtual void MoveToY(float targ, float dist)
     {
         float num = Distance2D(trans.position.y, targ);
@@ -560,6 +502,22 @@ public class AI : MonoBehaviour
         {
             Speed.y = (float)(-num2) * MaxSpeed;
         }
+    }
+
+    public virtual void MoveToX(float targ, float dist)
+    {
+        float num = Distance2D(trans.position.x, targ);
+        int num2 = default(int);
+        num2 = (int)Mathf.Sign(targ - trans.position.x);
+        if (!(num <= dist))
+        {
+            Speed.x = (float)num2 * MaxSpeed;
+        }
+        else if (NearEvader && !(num >= dist * FactorNear))
+        {
+            Speed.x = (float)(-num2) * MaxSpeed;
+        }
+        DontMoveTimer = 0;
     }
 
     public virtual float Distance2D(float x1, float x2)
@@ -636,12 +594,7 @@ public class AI : MonoBehaviour
             int num = (int)((float)EXP + UnityEngine.Random.Range((float)EXP * -0.1f, (float)EXP * 0.1f));
             Global.Experience += num;
             gameObject.layer = 30;
-            deathHandled = false;
             gameObject.BroadcastMessage("DISAPPEAR", null, SendMessageOptions.DontRequireReceiver);
-            if (!deathHandled && !deathSequenceActive && !fadeOutActive)
-            {
-                StartDeathSequence(100);
-            }
             if (num > 0)
             {
                 Global.CreateText("+ " + num + " Exp", trans.position + new Vector3(0f, 0f, -2f), new Color(1f, 1f, 0f, 1f), UnityEngine.Random.Range(-25, 25));
@@ -777,14 +730,14 @@ public class AI : MonoBehaviour
         {
             num2 = 0.1f;
         }
+        if (!(num2 <= 0f) && !(maxHurt <= 0f) && !(num2 <= MaxHP / maxHurt))
+        {
+            num2 = MaxHP / maxHurt;
+        }
         if (!flag)
         {
             CreatePartsByStrike();
             HurtTimer = 2;
-        }
-        if (!(num2 <= 0f) && !(maxHurt <= 0f) && !(num2 <= MaxHP / maxHurt))
-        {
-            num2 = MaxHP / maxHurt;
         }
         HurtMessage(num2);
         Vector3 position = trans.position;
@@ -895,6 +848,11 @@ public class AI : MonoBehaviour
     public virtual void DestroyIt()
     {
         UnityEngine.Object.Destroy(gameObject);
+    }
+
+    public virtual void DefaultDisappear(int frames)
+    {
+        StartDeathSequence(frames);
     }
 
     public virtual void StartFadeOut(int frames)

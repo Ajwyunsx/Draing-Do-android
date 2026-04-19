@@ -22,6 +22,48 @@ public class LogoRead : MonoBehaviour
 
 	public int NumLogo;
 
+	private Joystick jumpTouchPad;
+
+	private Joystick actionTouchPad;
+
+	private Joystick rollTouchPad;
+
+	private bool oldJumpTouchState;
+
+	private bool oldActionTouchState;
+
+	private bool oldRollTouchState;
+
+	private void CheckTouchPads()
+	{
+		if (!Global.MobilePlatform)
+		{
+			return;
+		}
+		MobileInputBridge.EnsureDefaultControls();
+		if (!(bool)jumpTouchPad)
+		{
+			jumpTouchPad = MobileInputBridge.FindJoystick("JumpJoystick");
+		}
+		if (!(bool)actionTouchPad)
+		{
+			actionTouchPad = MobileInputBridge.FindJoystick("ActionJoystick");
+		}
+		if (!(bool)rollTouchPad)
+		{
+			rollTouchPad = MobileInputBridge.FindJoystick("RollJoystick");
+		}
+	}
+
+	private bool TouchAdvanceDown()
+	{
+		CheckTouchPads();
+		bool flag = MobileInputBridge.IsTouchDown(actionTouchPad, ref oldActionTouchState);
+		bool flag2 = MobileInputBridge.IsTouchDown(jumpTouchPad, ref oldJumpTouchState);
+		bool flag3 = MobileInputBridge.IsTouchDown(rollTouchPad, ref oldRollTouchState);
+		return flag || flag2 || flag3;
+	}
+
 	public LogoRead()
 	{
 		MODE = "Off";
@@ -32,10 +74,12 @@ public class LogoRead : MonoBehaviour
 	public virtual void Start()
 	{
 		WayPath = Application.dataPath + "/logo/";
+		CheckTouchPads();
 	}
 
 	public virtual void Update()
 	{
+		bool flag = TouchAdvanceDown();
 		if (Input.GetKeyDown("escape"))
 		{
 			MODE = "Off";
@@ -45,6 +89,10 @@ public class LogoRead : MonoBehaviour
 			MODE = "Off";
 		}
 		if (Input.GetMouseButtonDown(0))
+		{
+			MODE = "Off";
+		}
+		if (flag)
 		{
 			MODE = "Off";
 		}

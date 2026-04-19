@@ -206,9 +206,39 @@ namespace LegacyCompat
 
 		public Color color = Color.white;
 
+		private Rect GetScreenRectBottomLeft()
+		{
+			Rect rect = pixelInset;
+			if ((bool)transform)
+			{
+				Vector3 position = transform.position;
+				rect.x += position.x * Screen.width;
+				rect.y += position.y * Screen.height;
+			}
+			return rect;
+		}
+
 		public bool HitTest(Vector3 screenPosition)
 		{
-			return pixelInset.Contains(new Vector2(screenPosition.x, screenPosition.y));
+			if (!isActiveAndEnabled)
+			{
+				return false;
+			}
+			return GetScreenRectBottomLeft().Contains(new Vector2(screenPosition.x, screenPosition.y));
+		}
+
+		private void OnGUI()
+		{
+			if (!isActiveAndEnabled || texture == null || color.a <= 0f)
+			{
+				return;
+			}
+			Rect screenRectBottomLeft = GetScreenRectBottomLeft();
+			screenRectBottomLeft.y = Screen.height - screenRectBottomLeft.y - screenRectBottomLeft.height;
+			Color color2 = GUI.color;
+			GUI.color = color;
+			GUI.DrawTexture(screenRectBottomLeft, texture, ScaleMode.StretchToFill, true);
+			GUI.color = color2;
 		}
 	}
 

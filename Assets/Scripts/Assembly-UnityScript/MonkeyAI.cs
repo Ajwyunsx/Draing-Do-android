@@ -461,7 +461,7 @@ public class MonkeyAI : MonoBehaviour
 
 	public virtual void DISAPPEAR()
 	{
-		core.StartDeathSequence(100);
+		core.NewAI("dead", string.Empty, 100, 100);
 	}
 
 	public virtual void SetBlock()

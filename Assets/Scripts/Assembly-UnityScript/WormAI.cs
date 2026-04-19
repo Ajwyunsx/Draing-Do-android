@@ -39,12 +39,12 @@ public class WormAI : MonoBehaviour
 	public virtual void Start()
 	{
 		core.Coords = transform.position;
-		if (CatchNow && Global.CurrentPlayerObject != null)
+		if (CatchNow && Global.CurrentPlayerObject != null && core.Distance(Global.CurrentPlayerObject.position, transform.position) <= 0.75f)
 		{
 			CatchIt(Global.CurrentPlayerObject);
 			return;
 		}
-		core.NewAI("idle", string.Empty, 50, 55);
+		core.NewAI("crawl", string.Empty, 50, 55);
 		core.Layer("plat");
 	}
 
@@ -119,9 +119,18 @@ public class WormAI : MonoBehaviour
 			float num2 = (localPosition2.y = y);
 			Vector3 vector3 = (core.trans.localPosition = localPosition2);
 		}
-		else if (ai == "idle")
+		else if (ai == "recover")
 		{
-			if (CatchNow && core.target != null)
+			if (core.land || core.timer <= 0)
+			{
+				core.gravity = lastGravity;
+				core.Layer("plat");
+				core.NewAI("crawl", string.Empty, 50, 55);
+			}
+		}
+		else if (ai == "idle" || ai == "crawl")
+		{
+			if (CatchNow && core.target != null && core.Distance(core.target.position, core.trans.position) <= 0.75f)
 			{
 				CatchNow = false;
 				CatchIt(core.target);
@@ -130,12 +139,12 @@ public class WormAI : MonoBehaviour
 			if (core.target != null)
 			{
 				core.LookTo(core.target.position, 1);
-				core.MoveToX(core.target.position.x, 0.05f);
+				core.MoveToX(core.target.position.x, 0.01f);
 				core.Walk();
 			}
 			if (core.timer <= 0)
 			{
-				core.NewAI("idle", string.Empty, 150, 200);
+				core.NewAI("crawl", string.Empty, 150, 200);
 			}
 		}
 	}
@@ -169,15 +178,21 @@ public class WormAI : MonoBehaviour
 	public virtual void DropIt()
 	{
 		CatchTimer = 100;
-		core.NewAI("idle", string.Empty, 50, 55);
+		core.NewAI("recover", string.Empty, 35, 35);
 		core.Layer("fly");
 		core.trans.parent = null;
 		core.gravity = 0.5f;
+		core.land = false;
+		core.landTimer = 10;
 		core.Speed.x = UnityEngine.Random.Range(-2f, 2f);
 		int num = -2;
 		Vector3 position = core.trans.position;
 		float num2 = (position.z = num);
 		Vector3 vector = (core.trans.position = position);
+	}
+
+	public virtual void DISAPPEAR()
+	{
 	}
 
 	public virtual void Main()

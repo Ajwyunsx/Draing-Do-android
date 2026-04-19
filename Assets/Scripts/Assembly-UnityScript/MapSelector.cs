@@ -22,6 +22,54 @@ public class MapSelector : MonoBehaviour
 
 	private int mini_timer;
 
+	private Joystick moveTouchPad;
+
+	private Joystick jumpTouchPad;
+
+	private Joystick actionTouchPad;
+
+	private Joystick rollTouchPad;
+
+	private bool oldJumpTouchState;
+
+	private bool oldActionTouchState;
+
+	private bool oldRollTouchState;
+
+	private void CheckTouchPads()
+	{
+		if (!Global.MobilePlatform)
+		{
+			return;
+		}
+		MobileInputBridge.EnsureDefaultControls();
+		if (!(bool)moveTouchPad)
+		{
+			moveTouchPad = MobileInputBridge.FindJoystick("MoveJoystick");
+		}
+		if (!(bool)jumpTouchPad)
+		{
+			jumpTouchPad = MobileInputBridge.FindJoystick("JumpJoystick");
+		}
+		if (!(bool)actionTouchPad)
+		{
+			actionTouchPad = MobileInputBridge.FindJoystick("ActionJoystick");
+		}
+		if (!(bool)rollTouchPad)
+		{
+			rollTouchPad = MobileInputBridge.FindJoystick("RollJoystick");
+		}
+	}
+
+	private bool ConfirmTouchDown()
+	{
+		CheckTouchPads();
+		bool flag = MobileInputBridge.IsTouchDown(actionTouchPad, ref oldActionTouchState);
+		bool flag2 = MobileInputBridge.IsTouchDown(jumpTouchPad, ref oldJumpTouchState);
+		bool flag3 = MobileInputBridge.IsTouchDown(rollTouchPad, ref oldRollTouchState);
+		return flag || flag2 || flag3;
+	}
+
 	public virtual void Awake()
 	{
 		button.SetActiveRecursively(false);
@@ -34,6 +82,7 @@ public class MapSelector : MonoBehaviour
 			CheckPointName = "level";
 		}
 		myTransform = transform;
+		CheckTouchPads();
 		GameObject[] array = null;
 		array = GameObject.FindGameObjectsWithTag("MapSlot");
 		int i = 0;
@@ -56,17 +105,25 @@ public class MapSelector : MonoBehaviour
 		}
 		activate = false;
 		GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity * 0f;
-		float x = Input.GetAxis("Horizontal") * 3f;
+		CheckTouchPads();
+		float num = MobileInputBridge.GetAxis(moveTouchPad, horizontal: true, 0.18f);
+		float num2 = MobileInputBridge.GetAxis(moveTouchPad, horizontal: false, 0.18f);
+		float x = (Input.GetAxis("Horizontal") + num) * 3f;
 		Vector3 velocity = GetComponent<Rigidbody>().velocity;
-		float num = (velocity.x = x);
+		float num3 = (velocity.x = x);
 		Vector3 vector = (GetComponent<Rigidbody>().velocity = velocity);
-		float y = Input.GetAxis("Vertical") * 3f;
+		float y = (Input.GetAxis("Vertical") + num2) * 3f;
 		Vector3 velocity2 = GetComponent<Rigidbody>().velocity;
-		float num2 = (velocity2.y = y);
+		float num4 = (velocity2.y = y);
 		Vector3 vector3 = (GetComponent<Rigidbody>().velocity = velocity2);
-		if (!(Mathf.Abs(Input.GetAxis("Horizontal")) + Mathf.Abs(Input.GetAxis("Vertical")) <= 0f))
+		if (!(Mathf.Abs(Input.GetAxis("Horizontal") + num) + Mathf.Abs(Input.GetAxis("Vertical") + num2) <= 0f))
 		{
 			Global.LastClickObject = null;
+		}
+		if (ConfirmTouchDown())
+		{
+			activate = true;
+			enter = true;
 		}
 	}
 

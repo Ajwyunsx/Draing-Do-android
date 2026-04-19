@@ -2,16 +2,18 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!43 &4300000
 Mesh:
-  serializedVersion: 8
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mesh_79
+  serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
     indexCount: 768
     topology: 0
+    baseVertex: 0
     firstVertex: 0
     vertexCount: 674
     localAABB:
@@ -23,22 +25,49 @@ Mesh:
     channels: []
     fullWeights: []
   m_BindPose: []
-  m_BoneNameHashes:
+  m_BoneNameHashes: 
   m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
   m_MeshCompression: 0
   m_IsReadable: 1
   m_KeepVertices: 0
   m_KeepIndices: 0
+  m_IndexFormat: 0
   m_IndexBuffer: 0000010002000a00010000000100030002000b0001000a000200030004000300050004000400050006000500070006000600070008000700090008000800090012001200090013001c000b000a001d000b001c00120013002400240013002500140015001600260015001400150017001600270015002600160017001800170019001800180019001a0019001b001a001a001b001c001b001d001c002400250036003600250037003800270026003900270038003600370048004800370049004a00390038004b0039004a00480049005a005a0049005b005c004b004a005d004b005c005a005b006c006c005b006d006e005d005c006f005d006e006c006d007e007e006d007f0080006f006e0081006f0080007e007f00900090007f00910092008100800093008100920090009100a200a2009100a300a40093009200a5009300a400a200a300b400b400a300b500b600a500a400b700a500b600b400b500c600c600b500c700c800b700b600c900b700c800c600c700d800d800c700d900da00c900c800db00c900da00d800d900ea00ea00d900eb00ec00db00da00ed00db00ec00ea00eb00fc00fc00eb00fd00fe00ed00ec00ff00ed00fe00fc00fd000e010e01fd000f011001ff00fe001101ff0010010e010f01200120010f0121012201110110012301110122012001210132013201210133013401230122013501230134013201330144014401330145014601350134014701350146014401450156015601450157015801470146015901470158015601570168016801570169016a01590158016b0159016a01680169017a017a0169017b018c016b016a018d016b018c017a017b019c019c017b019d017c017d017e019e017d017c017d017f017e019f017d019e017e017f0180017f0181018001800181018201810183018201820183018401830185018401840185018601850187018601860187018801870189018801880189018a0189018b018a018a018b01ac01ac018b01ad01ae018d018c01af018d01ae019c019d01be01be019d01bf01a0019f019e01a001a1019f01a201a101a001a201a301a101a401a301a201a401a501a301c001a501a401c101a501c001ac01ad01c801c801ad01c901ca01af01ae01cb01af01ca01b201b101b001b001b101cc01b201b301b101cc01b101cd01b401b301b201b401b501b301b601b501b401b601b701b501d201b701b601d301b701d201be01bf01da01da01bf01db01e401c101c001e501c101e401c801c901ec01ec01c901ed01ee01cb01ca01ef01cb01ee01cc01cd01ce01cd01cf01ce01ce01cf01d001cf01d101d001d001d101d201d101d301d201da01db01dc01db01dd01dc01dc01dd01de01dd01df01de01de01df01e001df01e101e001e001e101e201e101e301e201e201e30106020602e30107020802e501e4010902e5010802ec01ed0110021002ed011102f001ef01ee01f001f101ef01f201f101f001f201f301f101f401f301f201f401f501f301f601f501f401f601f701f5011202f701f6011302f7011202060207022202220207022302240209020802250209022402100211022c022c0211022d022e02130212022f0213022e02220223023e023e0223023f024002250224024102250240022c022d02480248022d0249024a022f022e024b022f024a023e023f025a025a023f025b025c02410240025d0241025c0248024902640264024902650266024b024a0267024b026602540253025202520253026e025402550253026e0253026f025602550254025602570255025802570256025802590257025a02590258025a025b02590270025d025c0271025d0270026402650278027802650279027a02670266027b0267027a026e026f02820282026f028302840271027002850271028402780279028c028c0279028d028e027b027a028f027b028e028202830296029602830297028602850284028602870285028802870286028802890287028a02890288028a028b0289028c028b028a028c028d028b0298028f028e0299028f02980296029702a002a0029702a1029a02990298029a029b0299029c029b029a029c029d029b029e029d029c029e029f029d02a0029f029e02a002a1029f02
-  m_Skin: []
   m_VertexData:
-    m_CurrentChannels: 1
+    serializedVersion: 3
     m_VertexCount: 674
     m_Channels:
     - stream: 0
       offset: 0
       format: 0
       dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
     - stream: 0
       offset: 0
       format: 0
@@ -74,57 +103,64 @@ Mesh:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_UV:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Normals:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Tangents:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Weights:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_NormalSigns:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_TangentSigns:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_FloatColors:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_BoneIndices:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Triangles:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
     m_Center: {x: 15.66, y: 8.58, z: 0}
     m_Extent: {x: 16.16, y: 9.09, z: 2}
   m_MeshUsageFlags: 4
-  m_BakedConvexCollisionMesh:
-  m_BakedTriangleCollisionMesh:
-  m_MeshOptimized: 1
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: -1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
