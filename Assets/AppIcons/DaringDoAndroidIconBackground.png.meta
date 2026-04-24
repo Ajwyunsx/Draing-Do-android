@@ -4,7 +4,7 @@ timeCreated: 1777043600
 licenseType: Free
 TextureImporter:
   serializedVersion: 4
-  name: 
+  name:
   fileIDToRecycleName: {}
   mipmaps:
     mipMapMode: 0
@@ -71,7 +71,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag:
   output:
     textureImportInstructions:
       compressedFormat: 0
@@ -87,7 +87,7 @@ TextureImporter:
       height: 0
       doesTextureContainAlpha: 0
       sourceWasHDR: 0
-    importInspectorWarnings: 
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+    importInspectorWarnings:
+  userData:
+  assetBundleName:
+  assetBundleVariant:
