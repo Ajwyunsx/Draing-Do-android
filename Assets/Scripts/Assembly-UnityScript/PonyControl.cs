@@ -420,7 +420,7 @@ public class PonyControl : MonoBehaviour
 
 	public virtual float GetMoveTouchHorizontal()
 	{
-		return MobileInputBridge.GetAxis(moveTouchPad, horizontal: true, 0.18f);
+		return MobileInputBridge.GetDigitalAxis(moveTouchPad, horizontal: true, 0.18f);
 	}
 
 	public virtual void FixedUpdate()
@@ -640,20 +640,23 @@ public class PonyControl : MonoBehaviour
 			}
 			if (Global.BlockControl <= 0 && !NOWALK && Global.DemoMove == 0)
 			{
-				float moveScale = ((StrikeTime > 0 && grounded) ? 0.85f : 1f);
-				if (PushTimer == 0)
+				if (ShiftTime <= 0)
 				{
-					float x2 = horizontalMove * speed * moveScale * SandSpeedFactor + NeedSpeed.x;
-					Vector3 velocity8 = rigid.velocity;
-					float num14 = (velocity8.x = x2);
-					Vector3 vector15 = (rigid.velocity = velocity8);
-				}
-				else
-				{
-					float x3 = horizontalMove * speed * 0.5f * moveScale * SandSpeedFactor + NeedSpeed.x;
-					Vector3 velocity9 = rigid.velocity;
-					float num15 = (velocity9.x = x3);
-					Vector3 vector17 = (rigid.velocity = velocity9);
+					float moveScale = ((StrikeTime > 0 && grounded) ? 0.85f : 1f);
+					if (PushTimer == 0)
+					{
+						float x2 = horizontalMove * speed * moveScale * SandSpeedFactor + NeedSpeed.x;
+						Vector3 velocity8 = rigid.velocity;
+						float num14 = (velocity8.x = x2);
+						Vector3 vector15 = (rigid.velocity = velocity8);
+					}
+					else
+					{
+						float x3 = horizontalMove * speed * 0.5f * moveScale * SandSpeedFactor + NeedSpeed.x;
+						Vector3 velocity9 = rigid.velocity;
+						float num15 = (velocity9.x = x3);
+						Vector3 vector17 = (rigid.velocity = velocity9);
+					}
 				}
 			}
 			if (Global.DemoMove != 0)

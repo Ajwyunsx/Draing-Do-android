@@ -12,14 +12,15 @@ public class SinLine2 : MonoBehaviour
 
 	public SinLine2()
 	{
-		c1 = Color.yellow;
-		c2 = Color.red;
+		c1 = new Color(1f, 1f, 1f, 0.55f);
+		c2 = new Color(1f, 1f, 1f, 0.15f);
 	}
 
 	public virtual void Start()
 	{
 		lineRenderer = (LineRenderer)gameObject.AddComponent(typeof(LineRenderer));
 		lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+		lineRenderer.material.color = new Color(1f, 1f, 1f, 0.45f);
 		lineRenderer.SetColors(c1, c2);
 		lineRenderer.SetWidth(0.2f, 0f);
 		lineRenderer.SetVertexCount(2);

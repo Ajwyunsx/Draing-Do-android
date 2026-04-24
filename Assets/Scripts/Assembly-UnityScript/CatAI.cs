@@ -191,7 +191,7 @@ public class CatAI : MonoBehaviour
         int direction = core.Direction;
         if (XSpeedOnJump != 0f)
         {
-            core.Speed.x = (float)direction * XSpeedOnJump;
+            core.CommitMoveX((float)direction * XSpeedOnJump);
         }
         core.Layer("fly");
         JumpNow = true;

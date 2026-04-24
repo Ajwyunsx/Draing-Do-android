@@ -55,6 +55,7 @@ public class CurrentToolSlot : MonoBehaviour
 		}
 		currentToolNumber = Global.CurrentToolNumber;
 		GO = UnityEngine.Object.Instantiate(LoadData.HUD(text), new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.005f), this.transform.rotation) as GameObject;
+		Global.PrepareUiForOverlay(GO);
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(GO.transform);
 		while (enumerator.MoveNext())
 		{

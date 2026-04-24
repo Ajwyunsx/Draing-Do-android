@@ -2,6 +2,7 @@ using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
+[DefaultExecutionOrder(100)]
 [Serializable]
 public class RatAI : MonoBehaviour
 {
@@ -40,6 +41,19 @@ public class RatAI : MonoBehaviour
     private bool JumpNow;
     private int ShellDangerTimer;
     private int ShellNoTurnTimer;
+    private int patrolPauseTimer;
+    private int stuckFrames;
+    private int wallTurnCooldown;
+    private float lastX;
+    private int lastPatrolSign;
+    private bool horizontalRigidPrepared;
+
+    private const int PatrolMoveMin = 90;
+    private const int PatrolMoveMax = 170;
+    private const int PatrolPauseMin = 20;
+    private const int PatrolPauseMax = 45;
+    private const int StuckFrameLimit = 20;
+    private const float RatZ = -0.9f;
 
     public RatAI()
     {
@@ -65,7 +79,7 @@ public class RatAI : MonoBehaviour
         coll = GetComponent<Collider>();
 
         Vector3 pos = transform.position;
-        pos.z = -0.9f;
+        pos.z = RatZ;
         transform.position = pos;
 
         if (AlwaysBlockAtUp)
@@ -99,6 +113,8 @@ public class RatAI : MonoBehaviour
 
         core.Coords = transform.position;
         gravity = core.gravity;
+        PrepareHorizontalRigidbody();
+        lastX = transform.position.x;
 
         if (ShowOnStart)
         {
@@ -127,20 +143,26 @@ public class RatAI : MonoBehaviour
     public virtual void MoveInit()
     {
         core.Layer("plat");
+        patrolPauseTimer = 0;
+        stuckFrames = 0;
+        core.ThereIsWall = 0;
 
         if (MoveToWall)
         {
             core.checkWalls = 10;
-            core.NewAI("moveWall", "idle", 10, 10);
+            EnsureDirection();
+            core.NewAI("moveWall", "idle", PatrolMoveMin, PatrolMoveMax);
+            CommitRatVelocity((float)core.Direction * core.MaxSpeed);
         }
         else
         {
-            Idle(10, 55);
+            Idle(PatrolMoveMin, PatrolMoveMax);
         }
     }
 
     public virtual void HideNow()
     {
+        CommitRatVelocity(0f);
         core.NewAI("hide", string.Empty, 50, 50);
         core.gravity = 0f;
         SendMessage("OrderOff", 0, SendMessageOptions.DontRequireReceiver);
@@ -170,14 +192,10 @@ public class RatAI : MonoBehaviour
             }
         }
 
-        if (core.target == null)
-        {
-            return;
-        }
-
         switch (core.ai)
         {
             case "forceSleep":
+                CommitRatVelocity(0f);
                 if (!ForceSleep)
                 {
                     Idle(50, 55);
@@ -185,6 +203,7 @@ public class RatAI : MonoBehaviour
                 break;
 
             case "show":
+                CommitRatVelocity(0f);
                 if (core.timer <= 0)
                 {
                     coll.enabled = true;
@@ -195,6 +214,7 @@ public class RatAI : MonoBehaviour
                 break;
 
             case "hide":
+                CommitRatVelocity(0f);
                 if (core.timer <= 0)
                 {
                     UnityEngine.Object.Destroy(gameObject);
@@ -202,93 +222,19 @@ public class RatAI : MonoBehaviour
                 break;
 
             case "jump":
-                if (JumpNow && !(core.Speed.y >= 0f))
-                {
-                    JumpNow = false;
-                    core.Layer("plat");
-                }
-
-                if (core.timer <= 0 && core.land)
-                {
-                    core.Layer("plat");
-                    if (!MoveToWall)
-                    {
-                        Idle(25, 100);
-                    }
-                    else
-                    {
-                        core.NewAI("moveWall", "idle", 10, 10);
-                    }
-                }
+                UpdateJumpState();
                 break;
 
             case "moveWall":
-                core.Move(core.Direction, 0f);
-                core.Walk();
-
-                if (core.ThereIsWall > 0)
-                {
-                    core.Look(1);
-                    core.ThereIsWall = 0;
-                }
-
-                if (core.ThereIsWall < 0)
-                {
-                    core.Look(-1);
-                    core.ThereIsWall = 0;
-                }
+                UpdateMoveWall();
                 break;
 
             case "idle":
-                core.LookTo(core.target.position, 1);
-                core.MoveToX(rnd.x, core.distance);
-                core.Walk();
-
-                if (core.timer <= 0 || core.HurtTimer > 0)
-                {
-                    if (core.land && JumpAfterIdle && core.HurtTimer <= 0)
-                    {
-                        Jump();
-                        return;
-                    }
-
-                    Idle(25, 100);
-                }
+                UpdatePatrolIdle();
                 break;
 
             case "shell":
-                if (!ShellRun)
-                {
-                    break;
-                }
-
-                if (ShellNoTurnTimer > 0)
-                {
-                    ShellNoTurnTimer--;
-                }
-
-                if (ShellDangerTimer > 0)
-                {
-                    ShellDangerTimer--;
-                    if (ShellDangerTimer <= 0)
-                    {
-                        core.HP = 1f;
-                    }
-                }
-
-                core.Move(core.Direction, 0f);
-
-                if (core.ThereIsWall > 0)
-                {
-                    core.Look(1);
-                    core.ThereIsWall = 0;
-                }
-
-                if (core.ThereIsWall < 0)
-                {
-                    core.Look(-1);
-                    core.ThereIsWall = 0;
-                }
+                UpdateShell();
                 break;
         }
 
@@ -302,12 +248,127 @@ public class RatAI : MonoBehaviour
             {
                 Jump();
             }
-            else if (JumpWhenISeeYou && core.ISeeYou(2f, 2f) &&
+            else if (JumpWhenISeeYou && (bool)core.target && core.ISeeYou(2f, 2f) &&
                      !(core.Distance2D(core.trans.position.x, core.target.position.x) >= SeeDistance))
             {
                 Jump();
             }
         }
+    }
+
+    private void UpdateJumpState()
+    {
+        if (JumpNow && !(core.Speed.y >= 0f))
+        {
+            JumpNow = false;
+            core.Layer("plat");
+        }
+
+        if (core.timer <= 0 && core.land)
+        {
+            core.Layer("plat");
+            if (!MoveToWall)
+            {
+                Idle(25, 100);
+            }
+            else
+            {
+                core.NewAI("moveWall", "idle", PatrolMoveMin, PatrolMoveMax);
+                EnsureDirection();
+                CommitRatVelocity((float)core.Direction * core.MaxSpeed);
+            }
+        }
+    }
+
+    private void UpdateMoveWall()
+    {
+        if (HandlePatrolPause())
+        {
+            return;
+        }
+
+        if (core.timer <= 0)
+        {
+            StartPatrolPause();
+            core.NewAI("moveWall", "idle", PatrolMoveMin, PatrolMoveMax);
+            return;
+        }
+
+        EnsureDirection();
+        if (TurnFromWall())
+        {
+            StartPatrolPause();
+            return;
+        }
+
+        float desiredX = (float)core.Direction * core.MaxSpeed;
+        CommitRatVelocity(desiredX);
+        core.Walk();
+        CheckStuck(desiredX, false);
+    }
+
+    private void UpdatePatrolIdle()
+    {
+        if (HandlePatrolPause())
+        {
+            return;
+        }
+
+        if (core.timer <= 0 || core.HurtTimer > 0)
+        {
+            if (core.land && JumpAfterIdle && core.HurtTimer <= 0)
+            {
+                Jump();
+                return;
+            }
+            StartPatrolPause();
+            return;
+        }
+
+        float distanceToTarget = core.Distance2D(core.trans.position.x, rnd.x);
+        if (distanceToTarget <= core.distance + 0.05f)
+        {
+            StartPatrolPause();
+            return;
+        }
+
+        int direction = DirectionTo(rnd.x);
+        core.Look(direction);
+        float desiredX = (float)direction * core.MaxSpeed;
+        CommitRatVelocity(desiredX);
+        core.Walk();
+        CheckStuck(desiredX, true);
+    }
+
+    private void UpdateShell()
+    {
+        if (!ShellRun)
+        {
+            CommitRatVelocity(0f);
+            return;
+        }
+
+        if (ShellNoTurnTimer > 0)
+        {
+            ShellNoTurnTimer--;
+        }
+
+        if (ShellDangerTimer > 0)
+        {
+            ShellDangerTimer--;
+            if (ShellDangerTimer <= 0)
+            {
+                core.HP = 1f;
+            }
+        }
+
+        EnsureDirection();
+        if (TurnFromWall())
+        {
+            return;
+        }
+
+        CommitRatVelocity((float)core.Direction * ShellSpeed);
     }
 
     public virtual void DISAPPEAR()
@@ -324,8 +385,10 @@ public class RatAI : MonoBehaviour
 
     public virtual void Idle(object min, object max)
     {
+        patrolPauseTimer = 0;
+        stuckFrames = 0;
         core.NewAI("idle", string.Empty, RuntimeServices.UnboxInt32(min), RuntimeServices.UnboxInt32(max));
-        rnd.x = core.Coords.x + UnityEngine.Random.Range(0f - FarFromStart, FarFromStart);
+        PickPatrolTarget(0);
     }
 
     public virtual void Jump()
@@ -375,7 +438,7 @@ public class RatAI : MonoBehaviour
 
                     ShellRun = false;
                     core.MaxSpeed = 0f;
-                    core.Speed.x = 0f;
+                    CommitRatVelocity(0f);
                     core.HP = 0f;
                 }
                 else
@@ -389,7 +452,7 @@ public class RatAI : MonoBehaviour
 
                     ShellRun = true;
                     core.MaxSpeed = ShellSpeed;
-                    core.Speed.x = ShellSpeed * (float)core.Direction;
+                    CommitRatVelocity(ShellSpeed * (float)core.Direction);
                     ShellDangerTimer = 3;
                 }
 
@@ -409,5 +472,227 @@ public class RatAI : MonoBehaviour
 
     public virtual void Main()
     {
+    }
+
+    private bool HandlePatrolPause()
+    {
+        if (patrolPauseTimer <= 0)
+        {
+            return false;
+        }
+
+        patrolPauseTimer--;
+        CommitRatVelocity(0f);
+        core.Walk();
+
+        if (patrolPauseTimer <= 0)
+        {
+            if (MoveToWall)
+            {
+                core.NewAI("moveWall", "idle", PatrolMoveMin, PatrolMoveMax);
+                EnsureDirection();
+            }
+            else
+            {
+                Idle(PatrolMoveMin, PatrolMoveMax);
+            }
+        }
+        return true;
+    }
+
+    private void StartPatrolPause()
+    {
+        patrolPauseTimer = UnityEngine.Random.Range(PatrolPauseMin, PatrolPauseMax + 1);
+        stuckFrames = 0;
+        core.ThereIsWall = 0;
+        CommitRatVelocity(0f);
+        core.Walk();
+    }
+
+    private void PickPatrolTarget(int preferredSign)
+    {
+        float patrolRange = Mathf.Max(FarFromStart, core.distance + 0.75f);
+        float offset = UnityEngine.Random.Range(core.distance + 0.35f, patrolRange);
+        int sign = preferredSign;
+
+        if (sign == 0)
+        {
+            sign = (lastPatrolSign == 0) ? ((UnityEngine.Random.value > 0.5f) ? 1 : -1) : -lastPatrolSign;
+        }
+
+        if (sign == 0)
+        {
+            sign = 1;
+        }
+
+        lastPatrolSign = sign;
+        rnd.x = core.Coords.x + offset * (float)sign;
+    }
+
+    private void PrepareHorizontalRigidbody()
+    {
+        if (core == null)
+        {
+            return;
+        }
+        if (horizontalRigidPrepared && (bool)core.rigid)
+        {
+            return;
+        }
+        if (!(bool)core.rigid)
+        {
+            core.rigid = GetComponent<Rigidbody>();
+        }
+        if (!(bool)core.rigid)
+        {
+            return;
+        }
+
+        core.VelocityBySpeed = true;
+        core.rigid.isKinematic = false;
+        core.rigid.useGravity = false;
+        core.rigid.interpolation = RigidbodyInterpolation.Interpolate;
+        RigidbodyConstraints constraints = core.rigid.constraints;
+        constraints &= ~RigidbodyConstraints.FreezePositionX;
+        constraints &= ~RigidbodyConstraints.FreezePositionY;
+        constraints |= RigidbodyConstraints.FreezePositionZ;
+        constraints |= RigidbodyConstraints.FreezeRotationX;
+        constraints |= RigidbodyConstraints.FreezeRotationY;
+        constraints |= RigidbodyConstraints.FreezeRotationZ;
+        core.rigid.constraints = constraints;
+        horizontalRigidPrepared = true;
+        core.rigid.WakeUp();
+    }
+
+    private void CommitRatVelocity(float desiredX)
+    {
+        PrepareHorizontalRigidbody();
+        core.DontMoveTimer = 0;
+        core.Speed.x = desiredX;
+
+        if (!(bool)core.rigid)
+        {
+            DriveTransformPosition(desiredX);
+            return;
+        }
+
+        Vector3 velocity = core.rigid.velocity;
+        velocity.x = 0f;
+        velocity.z = 0f;
+        core.rigid.velocity = velocity;
+
+        // Keep horizontal movement on one path. Mixing velocity and MovePosition caused visible jitter.
+        DriveRigidbodyPosition(desiredX);
+        core.rigid.WakeUp();
+    }
+
+    private void DriveRigidbodyPosition(float desiredX)
+    {
+        if (Mathf.Abs(desiredX) <= 0.01f || !(bool)core.rigid)
+        {
+            return;
+        }
+
+        Vector3 position = core.rigid.position;
+        position.x += desiredX * Time.fixedDeltaTime;
+        position.z = RatZ;
+        core.rigid.MovePosition(position);
+    }
+
+    private void DriveTransformPosition(float desiredX)
+    {
+        if (Mathf.Abs(desiredX) <= 0.01f)
+        {
+            return;
+        }
+
+        Vector3 position = transform.position;
+        position.x += desiredX * Time.fixedDeltaTime;
+        position.z = RatZ;
+        transform.position = position;
+    }
+
+    private bool TurnFromWall()
+    {
+        if (wallTurnCooldown > 0)
+        {
+            wallTurnCooldown--;
+            core.ThereIsWall = 0;
+            return false;
+        }
+
+        if (core.ThereIsWall > 0)
+        {
+            core.Look(1);
+            wallTurnCooldown = 8;
+            core.ThereIsWall = 0;
+            return true;
+        }
+
+        if (core.ThereIsWall < 0)
+        {
+            core.Look(-1);
+            wallTurnCooldown = 8;
+            core.ThereIsWall = 0;
+            return true;
+        }
+
+        return false;
+    }
+
+    private void CheckStuck(float desiredX, bool repickTarget)
+    {
+        if (Mathf.Abs(desiredX) <= 0.01f)
+        {
+            stuckFrames = 0;
+            lastX = transform.position.x;
+            return;
+        }
+
+        if (Mathf.Abs(transform.position.x - lastX) <= 0.0025f)
+        {
+            stuckFrames++;
+        }
+        else
+        {
+            stuckFrames = 0;
+        }
+
+        if (stuckFrames >= StuckFrameLimit)
+        {
+            int newDirection = -core.Direction;
+            if (newDirection == 0)
+            {
+                newDirection = (desiredX > 0f) ? -1 : 1;
+            }
+            core.Look(newDirection);
+            if (repickTarget)
+            {
+                PickPatrolTarget(newDirection);
+            }
+            core.ThereIsWall = 0;
+            wallTurnCooldown = 8;
+            StartPatrolPause();
+        }
+
+        lastX = transform.position.x;
+    }
+
+    private void EnsureDirection()
+    {
+        if (core.Direction == 0)
+        {
+            core.LookRnd();
+        }
+    }
+
+    private int DirectionTo(float targetX)
+    {
+        int direction = (int)Mathf.Sign(targetX - core.trans.position.x);
+        if (direction == 0)
+        {
+            direction = (core.Direction == 0) ? 1 : core.Direction;
+        }
+        return direction;
     }
 }

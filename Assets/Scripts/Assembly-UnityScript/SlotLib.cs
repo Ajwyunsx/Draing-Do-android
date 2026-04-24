@@ -61,6 +61,87 @@ public class SlotLib : MonoBehaviour
 		return Tool[index];
 	}
 
+	public static GameObject GetToolForSkill(int index, string skillName)
+	{
+		if (!EnsureLoaded())
+		{
+			return null;
+		}
+
+		int skillNumber = LeadingNumber(skillName);
+		if (skillNumber >= 0)
+		{
+			GameObject numberedTool = FindToolByLeadingNumber(skillNumber);
+			if ((bool)numberedTool)
+			{
+				return numberedTool;
+			}
+		}
+
+		if (!string.IsNullOrEmpty(skillName) && Skill != null)
+		{
+			string normalizedSkillName = NormalizeName(skillName);
+			for (int i = 0; i < Extensions.get_length((System.Array)Skill); i++)
+			{
+				if ((bool)Skill[i] && NormalizeName(Skill[i].name) == normalizedSkillName)
+				{
+					return GetTool(i);
+				}
+			}
+		}
+
+		return GetTool(index);
+	}
+
+	private static GameObject FindToolByLeadingNumber(int number)
+	{
+		if (Tool == null)
+		{
+			return null;
+		}
+
+		for (int i = 0; i < Extensions.get_length((System.Array)Tool); i++)
+		{
+			if ((bool)Tool[i] && LeadingNumber(Tool[i].name) == number)
+			{
+				return Tool[i];
+			}
+		}
+		return null;
+	}
+
+	private static int LeadingNumber(string name)
+	{
+		if (string.IsNullOrEmpty(name))
+		{
+			return -1;
+		}
+
+		string cleanName = NormalizeName(name);
+		int value = 0;
+		int count = 0;
+		for (int i = 0; i < cleanName.Length; i++)
+		{
+			char c = cleanName[i];
+			if (c < '0' || c > '9')
+			{
+				break;
+			}
+			value = value * 10 + (c - '0');
+			count++;
+		}
+		return (count > 0) ? value : -1;
+	}
+
+	private static string NormalizeName(string name)
+	{
+		if (string.IsNullOrEmpty(name))
+		{
+			return string.Empty;
+		}
+		return name.Replace("(Clone)", string.Empty).Trim();
+	}
+
 	public static GameObject CreateObj(string name)
 	{
 		if (!EnsureLoaded() || Obj == null)

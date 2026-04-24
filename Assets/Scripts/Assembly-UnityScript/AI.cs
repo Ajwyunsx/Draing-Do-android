@@ -452,7 +452,7 @@ public class AI : MonoBehaviour
     {
         if (xx != 0f)
         {
-            Speed.x = xx * MaxSpeed;
+            CommitMoveX(xx * MaxSpeed);
         }
         if (yy != 0f)
         {
@@ -509,15 +509,40 @@ public class AI : MonoBehaviour
         float num = Distance2D(trans.position.x, targ);
         int num2 = default(int);
         num2 = (int)Mathf.Sign(targ - trans.position.x);
+        float desiredX = 0f;
         if (!(num <= dist))
         {
-            Speed.x = (float)num2 * MaxSpeed;
+            desiredX = (float)num2 * MaxSpeed;
         }
         else if (NearEvader && !(num >= dist * FactorNear))
         {
-            Speed.x = (float)(-num2) * MaxSpeed;
+            desiredX = (float)(-num2) * MaxSpeed;
         }
+        CommitMoveX(desiredX);
+    }
+
+    public virtual void CommitMoveX(float desiredX)
+    {
         DontMoveTimer = 0;
+        Speed.x = desiredX;
+        if (!(bool)rigid)
+        {
+            return;
+        }
+
+        RigidbodyConstraints constraints = rigid.constraints;
+        constraints &= ~RigidbodyConstraints.FreezePositionX;
+        constraints |= RigidbodyConstraints.FreezePositionZ;
+        constraints |= RigidbodyConstraints.FreezeRotationX;
+        constraints |= RigidbodyConstraints.FreezeRotationY;
+        constraints |= RigidbodyConstraints.FreezeRotationZ;
+        rigid.constraints = constraints;
+
+        Vector3 velocity = rigid.velocity;
+        velocity.x = desiredX;
+        velocity.z = 0f;
+        rigid.velocity = velocity;
+        rigid.WakeUp();
     }
 
     public virtual float Distance2D(float x1, float x2)
@@ -528,7 +553,7 @@ public class AI : MonoBehaviour
     public virtual void DashTarget(Vector3 targ, float speed)
     {
         Vector3 normalized = (targ - trans.position).normalized;
-        Speed.x = normalized.x * speed;
+        CommitMoveX(normalized.x * speed);
         Speed.y = normalized.y * speed;
         DontMoveTimer = 0;
     }
@@ -540,8 +565,7 @@ public class AI : MonoBehaviour
         {
             num = 1;
         }
-        Speed.x = (float)num * speed;
-        DontMoveTimer = 0;
+        CommitMoveX((float)num * speed);
     }
 
     public virtual void DashTargetY(float targ, float speed)
@@ -557,8 +581,7 @@ public class AI : MonoBehaviour
 
     public virtual void DashX(float speed)
     {
-        Speed.x = speed;
-        DontMoveTimer = 0;
+        CommitMoveX(speed);
     }
 
     public virtual void DashY(float speed)
@@ -594,12 +617,18 @@ public class AI : MonoBehaviour
             int num = (int)((float)EXP + UnityEngine.Random.Range((float)EXP * -0.1f, (float)EXP * 0.1f));
             Global.Experience += num;
             gameObject.layer = 30;
+            ClearDeathStrikeParts();
+            deathHandled = false;
             gameObject.BroadcastMessage("DISAPPEAR", null, SendMessageOptions.DontRequireReceiver);
+            if (!deathHandled && !DeadRightNow)
+            {
+                DefaultDisappear(45);
+            }
             if (num > 0)
             {
                 Global.CreateText("+ " + num + " Exp", trans.position + new Vector3(0f, 0f, -2f), new Color(1f, 1f, 0f, 1f), UnityEngine.Random.Range(-25, 25));
             }
-            if (DeadRightNow)
+            if (DeadRightNow && !deathHandled)
             {
                 UnityEngine.Object.Destroy(gameObject);
             }
@@ -636,6 +665,11 @@ public class AI : MonoBehaviour
 
     public virtual void CreatePartsByStrike()
     {
+        if (IsDyingOrDead())
+        {
+            return;
+        }
+
         for (int i = 0; i < Extensions.get_length((System.Array)PartsByStrike); i++)
         {
             if ((bool)PartsByStrike[i])
@@ -644,6 +678,50 @@ public class AI : MonoBehaviour
             }
         }
         Global.LastCreatedObject = null;
+    }
+
+    public virtual bool IsDyingOrDead()
+    {
+        return onceDead || HP <= 0f || ai == "dead" || deathSequenceActive || fadeOutActive;
+    }
+
+    private void ClearDeathStrikeParts()
+    {
+        if (PartsByStrike == null || Extensions.get_length((System.Array)PartsByStrike) <= 0)
+        {
+            return;
+        }
+
+        GameObject[] objects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        for (int i = 0; i < Extensions.get_length((System.Array)PartsByStrike); i++)
+        {
+            if (!(bool)PartsByStrike[i])
+            {
+                continue;
+            }
+
+            string partName = NormalizeCloneName(PartsByStrike[i].name);
+            for (int j = 0; j < Extensions.get_length((System.Array)objects); j++)
+            {
+                if (!(bool)objects[j] || objects[j] == gameObject)
+                {
+                    continue;
+                }
+                if (NormalizeCloneName(objects[j].name) == partName && Distance(objects[j].transform.position, trans.position) <= 3f)
+                {
+                    UnityEngine.Object.Destroy(objects[j]);
+                }
+            }
+        }
+    }
+
+    private string NormalizeCloneName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            return string.Empty;
+        }
+        return name.Replace("(Clone)", string.Empty).Trim();
     }
 
     public virtual void Walk()
@@ -734,7 +812,8 @@ public class AI : MonoBehaviour
         {
             num2 = MaxHP / maxHurt;
         }
-        if (!flag)
+        bool lethalHit = HP - num2 <= 0f;
+        if (!flag && !lethalHit)
         {
             CreatePartsByStrike();
             HurtTimer = 2;

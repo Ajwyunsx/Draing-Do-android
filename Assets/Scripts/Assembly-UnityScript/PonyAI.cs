@@ -316,7 +316,7 @@ public class PonyAI : MonoBehaviour
         }
         if (XSpeedOnJump != 0f)
         {
-            core.Speed.x = (float)num * XSpeedOnJump;
+            core.CommitMoveX((float)num * XSpeedOnJump);
         }
         if (MoveToWall)
         {
@@ -353,7 +353,7 @@ public class PonyAI : MonoBehaviour
                     }
                     ShellRun = true;
                     core.MaxSpeed = ShellSpeed;
-                    core.Speed.x = ShellSpeed * (float)core.Direction;
+                    core.CommitMoveX(ShellSpeed * (float)core.Direction);
                     ShellDangerTimer = 3;
                 }
                 core.ThereIsWall = 0;

@@ -53,6 +53,16 @@ public static class MobileInputBridge
 		return Mathf.Clamp(num, -1f, 1f);
 	}
 
+	public static float GetDigitalAxis(Joystick joystick, bool horizontal, float deadZone)
+	{
+		float axis = GetAxis(joystick, horizontal, deadZone);
+		if (Mathf.Abs(axis) <= 0f)
+		{
+			return 0f;
+		}
+		return Mathf.Sign(axis);
+	}
+
 	public static bool GetEdge(bool currentState, ref bool oldState)
 	{
 		bool result = currentState && !oldState;

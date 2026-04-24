@@ -58,6 +58,7 @@ public class Text3d : MonoBehaviour
 	public virtual void Awake()
 	{
 		textMesh = (TextMesh)gameObject.GetComponent(typeof(TextMesh));
+		EnsureTextMaterial();
 		text = TextKey;
 		if (!string.IsNullOrEmpty(PriceScript))
 		{
@@ -272,6 +273,11 @@ public class Text3d : MonoBehaviour
 
 	public virtual void SetTextColor(Color c)
 	{
+		EnsureTextMaterial();
+		if ((bool)textMesh)
+		{
+			textMesh.color = c;
+		}
 		float r = c.r;
 		Color color = GetComponent<Renderer>().material.color;
 		float num = (color.r = r);
@@ -284,6 +290,36 @@ public class Text3d : MonoBehaviour
 		Color color7 = GetComponent<Renderer>().material.color;
 		float num3 = (color7.b = b);
 		Color color8 = (GetComponent<Renderer>().material.color = color7);
+	}
+
+	private void EnsureTextMaterial()
+	{
+		Renderer renderer = GetComponent<Renderer>();
+		if (!(bool)renderer)
+		{
+			return;
+		}
+
+		Material material = renderer.material;
+		if (!(bool)material)
+		{
+			return;
+		}
+
+		Shader textShader = Shader.Find("GUI/Text Shader");
+		if (!(bool)textShader)
+		{
+			textShader = Shader.Find("Legacy Shaders/Transparent/Diffuse");
+		}
+		if ((bool)textShader)
+		{
+			material.shader = textShader;
+		}
+
+		if ((bool)textMesh && (bool)textMesh.font && (bool)textMesh.font.material && (bool)textMesh.font.material.mainTexture)
+		{
+			material.mainTexture = textMesh.font.material.mainTexture;
+		}
 	}
 
 	public virtual void TextSetScale(float coef)

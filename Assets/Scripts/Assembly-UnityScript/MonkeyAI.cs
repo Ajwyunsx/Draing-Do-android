@@ -449,11 +449,11 @@ public class MonkeyAI : MonoBehaviour
 	public virtual void Jump()
 	{
 		core.JumpOn(JumpSpeed, 10);
-		int direction = core.Direction;
-		if (XSpeedOnJump != 0f)
-		{
-			core.Speed.x = (float)direction * XSpeedOnJump;
-		}
+        int direction = core.Direction;
+        if (XSpeedOnJump != 0f)
+        {
+            core.CommitMoveX((float)direction * XSpeedOnJump);
+        }
 		core.Layer("fly");
 		JumpNow = true;
 		core.NewAI("jump", string.Empty, 10, 10);

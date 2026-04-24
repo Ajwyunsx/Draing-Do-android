@@ -283,8 +283,72 @@ public class LevelCore : MonoBehaviour
 		HUDBAR.transform.parent = transform;
 		if ((bool)HUDBAR)
 		{
-			Vector3 position = Camera.main.ScreenToWorldPoint(new Vector3(0f, Screen.height, 1f));
+			Camera mainCamera = GetComponent<Camera>();
+			if (!(bool)mainCamera)
+			{
+				mainCamera = Camera.main;
+			}
+			if (!(bool)mainCamera)
+			{
+				return;
+			}
+			ConfigureHudRendering(HUDBAR, mainCamera);
+			Vector3 position = mainCamera.ScreenToWorldPoint(new Vector3(0f, Screen.height, 1f));
 			HUDBAR.transform.position = position;
+		}
+	}
+
+	private void ConfigureHudRendering(GameObject hud, Camera mainCamera)
+	{
+		if (!(bool)hud || !(bool)mainCamera)
+		{
+			return;
+		}
+
+		int hudLayer = 31;
+		int hudMask = (1 << 5) | (1 << hudLayer);
+		SetLayerRecursively(hud, hudLayer);
+		mainCamera.cullingMask &= ~hudMask;
+		EnsureHudOverlayCamera(mainCamera, hudMask);
+	}
+
+	private void EnsureHudOverlayCamera(Camera mainCamera, int hudMask)
+	{
+		Transform child = mainCamera.transform.Find("HUD Overlay Camera");
+		Camera hudCamera = null;
+		if ((bool)child)
+		{
+			hudCamera = child.GetComponent<Camera>();
+		}
+		if (!(bool)hudCamera)
+		{
+			GameObject cameraObject = new GameObject("HUD Overlay Camera");
+			cameraObject.transform.parent = mainCamera.transform;
+			cameraObject.transform.localPosition = Vector3.zero;
+			cameraObject.transform.localRotation = Quaternion.identity;
+			cameraObject.transform.localScale = Vector3.one;
+			hudCamera = cameraObject.AddComponent<Camera>();
+		}
+
+		hudCamera.CopyFrom(mainCamera);
+		hudCamera.clearFlags = CameraClearFlags.Depth;
+		hudCamera.cullingMask = hudMask;
+		hudCamera.depth = mainCamera.depth + 1f;
+		hudCamera.useOcclusionCulling = false;
+		hudCamera.enabled = mainCamera.enabled;
+	}
+
+	private void SetLayerRecursively(GameObject obj, int layer)
+	{
+		if (!(bool)obj)
+		{
+			return;
+		}
+
+		obj.layer = layer;
+		for (int i = 0; i < obj.transform.childCount; i++)
+		{
+			SetLayerRecursively(obj.transform.GetChild(i).gameObject, layer);
 		}
 	}
 

@@ -899,6 +899,7 @@ public class Global : MonoBehaviour
 			UnityEngine.Object.Destroy(MenuWindow);
 		}
 		MenuWindow = UnityEngine.Object.Instantiate(LoadData.HUD(name), new Vector3(0f, 0f, 3.5f), Quaternion.identity) as GameObject;
+		PrepareUiForOverlay(MenuWindow);
 		MenuWindow.transform.parent = Camera.main.transform;
 		MenuWindow.transform.localPosition = new Vector3(0f, 0f, 3.5f + (13f - Camera.main.fieldOfView) * 0.225f);
 	}
@@ -921,6 +922,7 @@ public class Global : MonoBehaviour
 			UnityEngine.Object.Destroy(MenuWindow);
 		}
 		MenuWindow = UnityEngine.Object.Instantiate(obj, new Vector3(0f, 0f, 3.5f), Quaternion.identity) as GameObject;
+		PrepareUiForOverlay(MenuWindow);
 		MenuWindow.transform.parent = Camera.main.transform;
 		MenuWindow.transform.localPosition = new Vector3(0f, 0f, 3.5f);
 	}
@@ -941,6 +943,7 @@ public class Global : MonoBehaviour
 			ASKS = null;
 		}
 		TalkWindow = UnityEngine.Object.Instantiate(LoadData.HUD("Talk"), new Vector3(0f, 0f, 4.5f), Quaternion.identity) as GameObject;
+		PrepareUiForOverlay(TalkWindow);
 		TalkWindow.transform.parent = Camera.main.transform;
 		TalkWindow.transform.localPosition = new Vector3(0f, 0f, 4.5f);
 	}
@@ -954,6 +957,7 @@ public class Global : MonoBehaviour
 			UnityEngine.Object.Destroy(YesNoWindow);
 		}
 		YesNoWindow = UnityEngine.Object.Instantiate(LoadData.HUD("MenuYesNo"), new Vector3(0f, 0f, 2.5f), Quaternion.identity) as GameObject;
+		PrepareUiForOverlay(YesNoWindow);
 		YesNoWindow.transform.parent = Camera.main.transform;
 		YesNoWindow.transform.localPosition = new Vector3(0f, 0f, 2.5f);
 		YesNoWindow.BroadcastMessage("Rename", name, SendMessageOptions.DontRequireReceiver);
@@ -2541,12 +2545,70 @@ public class Global : MonoBehaviour
 	public static void CreateText(string txt, Vector3 pos, Color clr, float ang)
 	{
 		LastCreatedObject = UnityEngine.Object.Instantiate(LoadData.HUD("CreateText")) as GameObject;
+		PrepareUiForOverlay(LastCreatedObject);
 		LastCreatedObject.transform.position = pos;
 		Vector3 localEulerAngles = LastCreatedObject.transform.localEulerAngles;
 		float num = (localEulerAngles.z = ang);
 		Vector3 vector = (LastCreatedObject.transform.localEulerAngles = localEulerAngles);
 		LastCreatedObject.BroadcastMessage("SetTextColor", clr, SendMessageOptions.DontRequireReceiver);
 		LastCreatedObject.BroadcastMessage("Rename", txt, SendMessageOptions.DontRequireReceiver);
+	}
+
+	public static void PrepareUiForOverlay(GameObject obj)
+	{
+		if (!(bool)obj)
+		{
+			return;
+		}
+
+		int overlayLayer = 31;
+		int overlayMask = (1 << 5) | (1 << overlayLayer);
+		SetLayerRecursively(obj, overlayLayer);
+		if ((bool)Camera.main)
+		{
+			Camera.main.cullingMask &= ~overlayMask;
+			EnsureUiOverlayCamera(Camera.main, overlayMask);
+		}
+	}
+
+	private static void EnsureUiOverlayCamera(Camera mainCamera, int overlayMask)
+	{
+		Transform child = mainCamera.transform.Find("HUD Overlay Camera");
+		Camera overlayCamera = null;
+		if ((bool)child)
+		{
+			overlayCamera = child.GetComponent<Camera>();
+		}
+		if (!(bool)overlayCamera)
+		{
+			GameObject cameraObject = new GameObject("HUD Overlay Camera");
+			cameraObject.transform.parent = mainCamera.transform;
+			cameraObject.transform.localPosition = Vector3.zero;
+			cameraObject.transform.localRotation = Quaternion.identity;
+			cameraObject.transform.localScale = Vector3.one;
+			overlayCamera = cameraObject.AddComponent<Camera>();
+		}
+
+		overlayCamera.CopyFrom(mainCamera);
+		overlayCamera.clearFlags = CameraClearFlags.Depth;
+		overlayCamera.cullingMask = overlayMask;
+		overlayCamera.depth = mainCamera.depth + 1f;
+		overlayCamera.useOcclusionCulling = false;
+		overlayCamera.enabled = mainCamera.enabled;
+	}
+
+	private static void SetLayerRecursively(GameObject obj, int layer)
+	{
+		if (!(bool)obj)
+		{
+			return;
+		}
+
+		obj.layer = layer;
+		for (int i = 0; i < obj.transform.childCount; i++)
+		{
+			SetLayerRecursively(obj.transform.GetChild(i).gameObject, layer);
+		}
 	}
 
 	public virtual void Main()

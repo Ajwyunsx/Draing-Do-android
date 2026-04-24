@@ -24,8 +24,8 @@ public class SinLine : MonoBehaviour
 
 	public SinLine()
 	{
-		c1 = Color.yellow;
-		c2 = Color.red;
+		c1 = new Color(1f, 1f, 1f, 0.55f);
+		c2 = new Color(1f, 1f, 1f, 0.15f);
 		lengthOfLineRenderer = 20;
 		speed = 2f;
 		length = 0.1f;
@@ -38,6 +38,7 @@ public class SinLine : MonoBehaviour
 		myTransform = transform;
 		lineRenderer = (LineRenderer)gameObject.AddComponent(typeof(LineRenderer));
 		lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+		lineRenderer.material.color = new Color(1f, 1f, 1f, 0.45f);
 		lineRenderer.SetColors(c1, c2);
 		lineRenderer.SetWidth(line_width, line_width);
 		lineRenderer.SetVertexCount(lengthOfLineRenderer);

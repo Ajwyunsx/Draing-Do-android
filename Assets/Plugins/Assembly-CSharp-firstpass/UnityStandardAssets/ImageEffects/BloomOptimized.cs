@@ -67,7 +67,9 @@ namespace UnityStandardAssets.ImageEffects
 			}
 			int num = ((resolution != Resolution.Low) ? 2 : 4);
 			float num2 = ((resolution != Resolution.Low) ? 1f : 0.5f);
-			fastBloomMaterial.SetVector("_Parameter", new Vector4(blurSize * num2, 0f, threshold, intensity));
+			float safeThreshold = Mathf.Clamp(threshold, 0.72f, 0.97f);
+			float safeIntensity = Mathf.Min(intensity, 0.22f);
+			fastBloomMaterial.SetVector("_Parameter", new Vector4(blurSize * num2, 0f, safeThreshold, safeIntensity));
 			source.filterMode = FilterMode.Bilinear;
 			int width = source.width / num;
 			int height = source.height / num;
@@ -77,7 +79,7 @@ namespace UnityStandardAssets.ImageEffects
 			int num3 = ((blurType != BlurType.Standard) ? 2 : 0);
 			for (int i = 0; i < blurIterations; i++)
 			{
-				fastBloomMaterial.SetVector("_Parameter", new Vector4(blurSize * num2 + (float)i * 1f, 0f, threshold, intensity));
+				fastBloomMaterial.SetVector("_Parameter", new Vector4(blurSize * num2 + (float)i * 1f, 0f, safeThreshold, safeIntensity));
 				RenderTexture temporary = RenderTexture.GetTemporary(width, height, 0, source.format);
 				temporary.filterMode = FilterMode.Bilinear;
 				Graphics.Blit(renderTexture, temporary, fastBloomMaterial, 2 + num3);

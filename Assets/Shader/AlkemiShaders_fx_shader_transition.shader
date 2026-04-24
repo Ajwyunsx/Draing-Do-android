@@ -2,7 +2,7 @@ Shader "AlkemiShaders/fx_shader_transition"
 {
 	Properties
 	{
-		_Emission ("Emission", Float) = 3
+		_Emission ("Emission", Float) = 1
 		_Color ("Main Color", Color) = (1,1,1,1)
 		_RampMap ("Ramp Map", 2D) = "white" {}
 		_EffectMap ("Effect Map", 2D) = "white" {}
@@ -62,7 +62,7 @@ Shader "AlkemiShaders/fx_shader_transition"
 				fixed rampU = saturate(effect.r + _RampUV.x);
 				fixed4 ramp = tex2D(_RampMap, float2(rampU, 0.5));
 				fixed4 tint = lerp(_Color, _LifeColor, saturate(i.color.a));
-				fixed3 rgb = effect.rgb * ramp.rgb * tint.rgb * max(_Emission, 0);
+				fixed3 rgb = effect.rgb * ramp.rgb * tint.rgb * saturate(_Emission);
 				fixed alpha = saturate(effect.a * tint.a);
 				return fixed4(rgb, alpha);
 			}

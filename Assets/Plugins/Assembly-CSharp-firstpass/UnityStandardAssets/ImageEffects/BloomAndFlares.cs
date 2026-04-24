@@ -114,6 +114,9 @@ namespace UnityStandardAssets.ImageEffects
 			{
 				pass = BloomScreenBlendMode.Add;
 			}
+			float safeBloomIntensity = Mathf.Min(bloomIntensity, 0.22f);
+			float safeBloomThreshold = Mathf.Clamp(bloomThreshold, 0.72f, 0.97f);
+			float safeLensflareIntensity = Mathf.Min(lensflareIntensity, 0.18f);
 			RenderTextureFormat format = ((!doHdr) ? RenderTextureFormat.Default : RenderTextureFormat.ARGBHalf);
 			RenderTexture temporary = RenderTexture.GetTemporary(source.width / 2, source.height / 2, 0, format);
 			RenderTexture temporary2 = RenderTexture.GetTemporary(source.width / 4, source.height / 4, 0, format);
@@ -124,7 +127,7 @@ namespace UnityStandardAssets.ImageEffects
 			Graphics.Blit(source, temporary, screenBlend, 2);
 			Graphics.Blit(temporary, temporary2, screenBlend, 2);
 			RenderTexture.ReleaseTemporary(temporary);
-			BrightFilter(bloomThreshold, useSrcAlphaAsMask, temporary2, temporary3);
+			BrightFilter(safeBloomThreshold, useSrcAlphaAsMask, temporary2, temporary3);
 			temporary2.DiscardContents();
 			if (bloomBlurIterations < 1)
 			{
@@ -145,7 +148,7 @@ namespace UnityStandardAssets.ImageEffects
 			{
 				if (lensflareMode == LensflareStyle34.Ghosting)
 				{
-					BrightFilter(lensflareThreshold, 0f, temporary2, temporary4);
+					BrightFilter(Mathf.Clamp(lensflareThreshold, 0.72f, 0.97f), 0f, temporary2, temporary4);
 					temporary2.DiscardContents();
 					Vignette(0.975f, temporary4, temporary3);
 					temporary4.DiscardContents();
@@ -154,8 +157,9 @@ namespace UnityStandardAssets.ImageEffects
 				}
 				else
 				{
-					hollywoodFlaresMaterial.SetVector("_threshold", new Vector4(lensflareThreshold, 1f / (1f - lensflareThreshold), 0f, 0f));
-					hollywoodFlaresMaterial.SetVector("tintColor", new Vector4(flareColorA.r, flareColorA.g, flareColorA.b, flareColorA.a) * flareColorA.a * lensflareIntensity);
+					float safeLensflareThreshold = Mathf.Clamp(lensflareThreshold, 0.72f, 0.97f);
+					hollywoodFlaresMaterial.SetVector("_threshold", new Vector4(safeLensflareThreshold, 1f / (1f - safeLensflareThreshold), 0f, 0f));
+					hollywoodFlaresMaterial.SetVector("tintColor", new Vector4(flareColorA.r, flareColorA.g, flareColorA.b, flareColorA.a) * flareColorA.a * safeLensflareIntensity);
 					Graphics.Blit(temporary4, temporary3, hollywoodFlaresMaterial, 2);
 					temporary4.DiscardContents();
 					Graphics.Blit(temporary3, temporary4, hollywoodFlaresMaterial, 3);
@@ -204,7 +208,7 @@ namespace UnityStandardAssets.ImageEffects
 					}
 				}
 			}
-			screenBlend.SetFloat("_Intensity", bloomIntensity);
+			screenBlend.SetFloat("_Intensity", safeBloomIntensity);
 			screenBlend.SetTexture("_ColorBuffer", source);
 			Graphics.Blit(temporary2, destination, screenBlend, (int)pass);
 			RenderTexture.ReleaseTemporary(temporary2);
@@ -220,10 +224,11 @@ namespace UnityStandardAssets.ImageEffects
 
 		private void BlendFlares(RenderTexture from, RenderTexture to)
 		{
-			lensFlareMaterial.SetVector("colorA", new Vector4(flareColorA.r, flareColorA.g, flareColorA.b, flareColorA.a) * lensflareIntensity);
-			lensFlareMaterial.SetVector("colorB", new Vector4(flareColorB.r, flareColorB.g, flareColorB.b, flareColorB.a) * lensflareIntensity);
-			lensFlareMaterial.SetVector("colorC", new Vector4(flareColorC.r, flareColorC.g, flareColorC.b, flareColorC.a) * lensflareIntensity);
-			lensFlareMaterial.SetVector("colorD", new Vector4(flareColorD.r, flareColorD.g, flareColorD.b, flareColorD.a) * lensflareIntensity);
+			float safeLensflareIntensity = Mathf.Min(lensflareIntensity, 0.18f);
+			lensFlareMaterial.SetVector("colorA", new Vector4(flareColorA.r, flareColorA.g, flareColorA.b, flareColorA.a) * safeLensflareIntensity);
+			lensFlareMaterial.SetVector("colorB", new Vector4(flareColorB.r, flareColorB.g, flareColorB.b, flareColorB.a) * safeLensflareIntensity);
+			lensFlareMaterial.SetVector("colorC", new Vector4(flareColorC.r, flareColorC.g, flareColorC.b, flareColorC.a) * safeLensflareIntensity);
+			lensFlareMaterial.SetVector("colorD", new Vector4(flareColorD.r, flareColorD.g, flareColorD.b, flareColorD.a) * safeLensflareIntensity);
 			Graphics.Blit(from, to, lensFlareMaterial);
 		}
 
